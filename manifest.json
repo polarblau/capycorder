@@ -1,0 +1,31 @@
+{
+  "name": "Capycorder",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "Record user interactions for use in Capybara request specs.",
+  "icons": {
+    "128": "images/icon128.png",
+    "16": "images/icon16.png",
+    "48": "images/icon48.png"
+  },
+  "content_scripts": [{
+    "all_frames": true,
+    "matches": ["\u003Call_urls\u003E"],
+    "run_at": "document_start",
+    "js": [
+      "js/lib/jquery.js",
+      "js/lib/underscore.js",
+      "js/lib/capycorder.js",
+      "js/lib/locator_generator.js",
+      "js/recorder.js"
+    ]
+  }],
+  "browser_action": {
+    "default_icon": "images/button_off.png",
+    "default_title": "Record a new session"
+   },
+  "background": {
+    "page": "background.html"
+  },
+  "permissions": ["tabs", "http://*/*", "clipboardRead", "clipboardWrite"]
+}
