@@ -42,6 +42,7 @@ class Capycorder
     @locator = new LocatorGenerator
 
   # TODO: rename to something less chrome-relevant?
+  # TODO: maybe this should even go into the background?
   setTabURL: (url) ->
     @tabURL = url
 
@@ -216,6 +217,7 @@ class Capycorder
   # convert to capybara strings
   # TODO: do we need the `page.`?
   TEMPLATES =
+    # CAPYBARA
     attachFile:  (a) -> "page.attach_file('#{a.locator}', '#{a.options.file}')"
     check:       (a) -> "page.check('#{a.locator}')"
     uncheck:     (a) -> "page.uncheck('#{a.locator}')"
@@ -226,7 +228,8 @@ class Capycorder
     clickLink:   (a) -> "page.click_link('#{a.locator}')"
     withinForm:  (s) -> ["page.within_form('#{s}') do", "end"]
     visitPath:   (p) -> "page.visit('#{p}')"
-    it:              -> ["it 'DOES SOMETHING' do", "end"]
+    # RSPEC
+    it:              -> ["it 'DOESSOMETHING' do", "end"]
 
   # TODO: this should go into a helper of some kind
   #       maybe use a proper external lib even?

@@ -273,7 +273,7 @@
         return "page.visit('" + p + "')";
       },
       it: function() {
-        return ["it 'DOES SOMETHING' do", "end"];
+        return ["it 'DOESSOMETHING' do", "end"];
       }
     };
 
