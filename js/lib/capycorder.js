@@ -88,7 +88,7 @@
     Capycorder.prototype.reset = function() {};
 
     Capycorder.prototype.bind = function(event, callback) {
-      return $(document).bind([event, this.namespace].join('.'), callback);
+      return $(document).on([event, this.namespace].join('.'), callback);
     };
 
     Capycorder.prototype.trigger = function(event, data) {
@@ -125,7 +125,7 @@
     Capycorder.prototype._attachConfirmingEvents = function() {
       var _this = this;
       return $(document).on('mouseup', function(e) {
-        return _this.hasSelector($(e.currentTarget));
+        return _this.shouldHaveSelector($(e.target));
       });
     };
 
@@ -231,46 +231,72 @@
       });
     };
 
-    Capycorder.prototype.hasSelector = function($el) {
-      return console.log('has selector...');
+    Capycorder.prototype._confirmedElements = [];
+
+    Capycorder.prototype._confirmElement = function(name, selector, options) {
+      if (options == null) {
+        options = {};
+      }
+      return this._confirmedElements.push({
+        name: name,
+        selector: selector,
+        options: options
+      });
     };
 
-    Capycorder.prototype.hasContent = function($el) {
-      return console.log('has content: ');
+    Capycorder.prototype.shouldHaveSelector = function($el) {
+      var selection, selector;
+      selection = window.getSelection().toString();
+      if (selection.length) {
+        return this.shouldHaveContent($el, selection);
+      } else {
+        selector = $el.getSelector();
+        return this._confirmElement('shouldHaveSelector', selector);
+      }
+    };
+
+    Capycorder.prototype.shouldHaveContent = function($el, content) {
+      return this._confirmElement('shouldHaveContent', content);
     };
 
     Capycorder.prototype.withinForm = function($elements) {};
 
     TEMPLATES = {
       attachFile: function(a) {
-        return "page.attach_file('" + a.locator + "', '" + a.options.file + "')";
+        return "attach_file('" + a.locator + "', '" + a.options.file + "')";
       },
       check: function(a) {
-        return "page.check('" + a.locator + "')";
+        return "check('" + a.locator + "')";
       },
       uncheck: function(a) {
-        return "page.uncheck('" + a.locator + "')";
+        return "uncheck('" + a.locator + "')";
       },
       choose: function(a) {
-        return "page.choose('" + a.locator + "')";
+        return "choose('" + a.locator + "')";
       },
       clickButton: function(a) {
-        return "page.click_button('" + a.locator + "')";
+        return "click_button('" + a.locator + "')";
       },
       fillIn: function(a) {
-        return "page.fill_in('" + a.locator + "', :with => '" + a.options["with"] + "')";
+        return "fill_in('" + a.locator + "', :with => '" + a.options["with"] + "')";
       },
       select: function(a) {
-        return "page.select('" + a.locator + "', :from => '" + a.options.from + "')";
+        return "select('" + a.locator + "', :from => '" + a.options.from + "')";
       },
       clickLink: function(a) {
-        return "page.click_link('" + a.locator + "')";
+        return "click_link('" + a.locator + "')";
       },
       withinForm: function(s) {
-        return ["page.within_form('" + s + "') do", "end"];
+        return ["within_form('" + s + "') do", "end"];
       },
       visitPath: function(p) {
-        return "page.visit('" + p + "')";
+        return "visit('" + p + "')";
+      },
+      shouldHaveSelector: function(s) {
+        return "page.should have_selector('" + s + "')";
+      },
+      shouldHaveContent: function(c) {
+        return "page.should have_content('" + c + "')";
       },
       it: function() {
         return ["it 'DOESSOMETHING' do", "end"];
@@ -285,7 +311,7 @@
     };
 
     Capycorder.prototype.getCapybaraMethods = function() {
-      var action, indent, path, scope, string, strings, _i, _len, _ref, _ref1;
+      var action, element, indent, path, scope, string, strings, _i, _j, _len, _len1, _ref, _ref1, _ref2;
       _ref = [[], '  '], strings = _ref[0], indent = _ref[1];
       strings.push(TEMPLATES.it()[0]);
       path = this._parseURL(this.tabURL).pathname;
@@ -310,6 +336,11 @@
       }
       if (scope) {
         strings.push(indent + TEMPLATES.withinForm(scope)[1]);
+      }
+      _ref2 = this._confirmedElements;
+      for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+        element = _ref2[_j];
+        strings.push(indent + TEMPLATES[element.name](element.selector));
       }
       strings.push(TEMPLATES.it()[1]);
       return strings.join('\n');

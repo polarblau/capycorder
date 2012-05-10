@@ -1,5 +1,6 @@
 # Depends on: jQuery, LocatorGenerator
 
+
 ###
 
   Usage example:
@@ -66,7 +67,7 @@ class Capycorder
   reset: ->
 
   bind: (event, callback) ->
-    $(document).bind [event, @namespace].join('.'), callback
+    $(document).on [event, @namespace].join('.'), callback
 
   trigger: (event, data) ->
     $(document).trigger [event, @namespace].join('.'), [data]
@@ -74,6 +75,9 @@ class Capycorder
   #
 
   _attachRecordingEvents: ->
+    # TODO: use delegate:
+    #       $(document).delegate 'input[type=file]', ['change', @namespace].join('.'), (e) =>
+    # TODO:
     $('input[type=file]').on 'change', (e) => @attachFile $(e.currentTarget)
     # calls #uncheck if not checked:
     $('input[type=checkbox]').on 'change', (e) => @check $(e.currentTarget)
@@ -96,11 +100,18 @@ class Capycorder
 
 
   _detachRecordingEvents: ->
+    # TODO: use undelegate
+    #       $(document).undelegate ".#{@namespace}"
 
   _attachConfirmingEvents: ->
-    $(document).on 'mouseup', (e) => @hasSelector $(e.currentTarget)
+    # TODO: use delegate
+    $(document).on 'mouseup', (e) => @shouldHaveSelector $(e.target)
+
 
   _detachConfirmingEvents: ->
+    # TODO: use undelegate
+    #       $(document).undelegate ".#{@namespace}"
+
 
 
   # ----------------------------------------------------------------------------
@@ -191,16 +202,24 @@ class Capycorder
 
   # Node::Matchers
 
-  hasSelector: ($el) ->
-    # mouseup -> if text range selected,
-    # use #hasContent
+  _confirmedElements: []
+  _confirmElement: (name, selector, options = {}) ->
+    @_confirmedElements.push
+      name: name, selector: selector, options: options
+
+
+  shouldHaveSelector: ($el) ->
     # TODO: implement SelectorGenerator class
     # TODO: FUTURE: implement XPathGenerator class
-    # selector = @selector.generate($el)
-    console.log 'has selector...'
+    selection = window.getSelection().toString()
+    if selection.length
+      @shouldHaveContent($el, selection)
+    else
+      selector = $el.getSelector()
+      @_confirmElement 'shouldHaveSelector', selector
 
-  hasContent: ($el) ->
-    console.log 'has content: '
+  shouldHaveContent: ($el, content) ->
+    @_confirmElement 'shouldHaveContent', content
 
 
   # ----------------------------------------------------------------------------
@@ -217,19 +236,22 @@ class Capycorder
   # convert to capybara strings
   # TODO: do we need the `page.`?
   TEMPLATES =
-    # CAPYBARA
-    attachFile:  (a) -> "page.attach_file('#{a.locator}', '#{a.options.file}')"
-    check:       (a) -> "page.check('#{a.locator}')"
-    uncheck:     (a) -> "page.uncheck('#{a.locator}')"
-    choose:      (a) -> "page.choose('#{a.locator}')"
-    clickButton: (a) -> "page.click_button('#{a.locator}')"
-    fillIn:      (a) -> "page.fill_in('#{a.locator}', :with => '#{a.options.with}')"
-    select:      (a) -> "page.select('#{a.locator}', :from => '#{a.options.from}')"
-    clickLink:   (a) -> "page.click_link('#{a.locator}')"
-    withinForm:  (s) -> ["page.within_form('#{s}') do", "end"]
-    visitPath:   (p) -> "page.visit('#{p}')"
+    # CAPYBARA actions
+    attachFile:  (a) -> "attach_file('#{a.locator}', '#{a.options.file}')"
+    check:       (a) -> "check('#{a.locator}')"
+    uncheck:     (a) -> "uncheck('#{a.locator}')"
+    choose:      (a) -> "choose('#{a.locator}')"
+    clickButton: (a) -> "click_button('#{a.locator}')"
+    fillIn:      (a) -> "fill_in('#{a.locator}', :with => '#{a.options.with}')"
+    select:      (a) -> "select('#{a.locator}', :from => '#{a.options.from}')"
+    clickLink:   (a) -> "click_link('#{a.locator}')"
+    withinForm:  (s) -> ["within_form('#{s}') do", "end"]
+    visitPath:   (p) -> "visit('#{p}')"
+    # CAPYBARA confirms
+    shouldHaveSelector: (s) -> "page.should have_selector('#{s}')"
+    shouldHaveContent:  (c) -> "page.should have_content('#{c}')"
     # RSPEC
-    it:              -> ["it 'DOESSOMETHING' do", "end"]
+    it: -> ["it 'DOESSOMETHING' do", "end"]
 
   # TODO: this should go into a helper of some kind
   #       maybe use a proper external lib even?
@@ -263,6 +285,9 @@ class Capycorder
       strings.push string
 
     if scope then strings.push(indent + TEMPLATES.withinForm(scope)[1])
+
+    for element in @_confirmedElements
+      strings.push indent + TEMPLATES[element.name](element.selector)
 
     strings.push TEMPLATES.it()[1]
 
