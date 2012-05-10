@@ -4,7 +4,7 @@ Chrome extension, generating Capybara request spec steps based on user interacti
 
 ## The plan!
 
-* -get basic functionality working using the current structure- ✔
+* ✔ ~~get basic functionality working using the current structure~~
 * add highlighting on hover
 * test in actual project to get the capybara syntax right
 * write "integration" tests
