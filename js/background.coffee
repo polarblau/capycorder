@@ -1,3 +1,5 @@
+# TODO: wrap these things into methods?
+
 # state control for the whole extension:
 state  = 'off'
 states = 'recording confirming printing off'.split(' ')

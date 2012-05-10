@@ -4,6 +4,7 @@ window.Clipboard =
     # #execCommand is only available to background pages
     chrome.extension.sendRequest name: 'copy', text: text
 
+# TODO: wrap these into methods?
 capycorder = new Capycorder
 capycorder.bind 'captured', (data) ->
   chrome.extension.sendRequest _.extend(name: 'captured', data)
