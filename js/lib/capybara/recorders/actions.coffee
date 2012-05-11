@@ -7,20 +7,20 @@ class Capybara.Recorders.Actions
   namespace: 'actionrecorder'
 
   events:
-    'change input[type=file]'    : @attachFile
-    'change input[type=checkbox]': @check
-    'click input[type=radio]'    : @choose
-    'click input[type=submit]'   : @clickButton
-    'click input[type=reset]'    : @clickButton
-    'click input[type=button]'   : @clickButton
-    'click button'               : @clickButton
-    'click a'                    : @clickLink
-    'keyup input[type=text]'     : @fillIn
-    'keyup input[type=password]' : @fillIn
-    'keyup input[type=email]'    : @fillIn
-    'keyup input[type=search]'   : @fillIn
-    'keyup textarea'             : @fillIn
-    'change select'              : @select
+    'change input[type=file]'    : 'attachFile'
+    'change input[type=checkbox]': 'check'
+    'click input[type=radio]'    : 'choose'
+    'click input[type=submit]'   : 'clickButton'
+    'click input[type=reset]'    : 'clickButton'
+    'click input[type=button]'   : 'clickButton'
+    'click button'               : 'clickButton'
+    'click a'                    : 'clickLink'
+    'keyup input[type=text]'     : 'fillIn'
+    'keyup input[type=password]' : 'fillIn'
+    'keyup input[type=email]'    : 'fillIn'
+    'keyup input[type=search]'   : 'fillIn'
+    'keyup textarea'             : 'fillIn'
+    'change select'              : 'select'
 
 
   # ----------------------------------------------------------------------------
@@ -39,50 +39,60 @@ class Capybara.Recorders.Actions
 
   # ----------------------------------------------------------------------------
   # EVENTHANDLERS
+  # TODO: Remove some of the duplication
+  #       Defining $el through the event is forced by the delegation
 
-  attachFile: ($el) ->
-    locator = $el.locator ['name', 'id', 'label']
+  attachFile: (e) =>
+    $el = $(e.target)
+    locator = $el.getLocator ['name', 'id', 'label']
     @findScopeAndCapture 'attachFile', $el, locator, file: $el.val()
 
-  check: ($el) ->
+  check: (e) =>
+    $el = $(e.target)
     if $el.is ':checked'
-      locator = $el.locator ['name', 'id', 'label']
+      locator = $el.getLocator ['name', 'id', 'label']
       @findScopeAndCapture 'check', $el, locator
     else
       @uncheck $el
 
-  uncheck: ($el) ->
-    locator = $el.locator ['name', 'id', 'label']
+  uncheck: (e) =>
+    $el = $(e.target)
+    locator = $el.getLocator ['name', 'id', 'label']
     @findScopeAndCapture 'uncheck', $el, locator
 
-  choose: ($el) ->
-    locator = $el.locator ['label', 'id', 'name']
+  choose: (e) =>
+    $el = $(e.target)
+    locator = $el.getLocator ['label', 'id', 'name']
     @findScopeAndCapture 'choose', $el, locator
 
-  clickButton: ($el) ->
-    locator = $el.locator ['id', 'text', 'value']
+  clickButton: (e) =>
+    $el = $(e.target)
+    locator = $el.getLocator ['id', 'text', 'value']
     @findScopeAndCapture 'clickButton', $el, locator
 
-  clickLink: ($el) ->
-    locator = $el.locator ['id', 'text', 'imgAlt']
+  clickLink: (e) =>
+    $el = $(e.target)
+    locator = $el.getLocator ['id', 'text', 'imgAlt']
     @findScopeAndCapture 'clickLink', $el, locator
 
-  fillIn: ($el) ->
-    locator = $el.locator ['name', 'id', 'label']
+  fillIn: (e) =>
+    $el = $(e.target)
+    locator = $el.getLocator ['name', 'id', 'label']
     previous = _.last(@actions)
     if previous && previous.name == 'fillIn' && previous.locator == locator
       previous.options.with = $el.val()
     else
       @findScopeAndCapture 'fillIn', $el, locator, width: $el.val()
 
-  select: ($el) ->
-    locator = $el.locator ['name', 'id', 'label']
+  select: (e) =>
+    $el = $(e.target)
+    locator = $el.getLocator ['name', 'id', 'label']
     @findScopeAndCapture 'select', $el, $el.val(), from: locator
 
   # HELPERS
 
   findScopeAndCapture: (name, $el, locator, options) ->
-    @capture name, @_formScope($el), locator, options
+    @capture name, locator, @_formScope($el), options
 
   capture: (name, locator, scope, options = {}) ->
     action =
@@ -108,9 +118,9 @@ class Capybara.Recorders.Actions
     [event, @namespace].join('.')
 
   _attachEvents: ->
-    for target, method in @events
-      [event, element] = target.split(' ')
-      @$scope.delegate element, @_nsevent(event), (e) => method(e)
+    for target, method of @events
+      [event, selector] = target.split(' ')
+      @$scope.delegate selector, event, @[method]
 
   _detachEvents: ->
     @$scope.undelegate ".#{@namespace}"

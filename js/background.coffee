@@ -2,7 +2,7 @@
 
 # state control for the whole extension:
 state  = 'off'
-states = 'recording confirming printing off'.split(' ')
+states = 'capture.actions capture.matchers generate off'.split(' ')
 
 changeToNextState = (tab) ->
   state = states[_.indexOf(states, state) + 1] || _.first(states)
@@ -12,21 +12,27 @@ changeToNextState = (tab) ->
 
   # update button
   chrome.browserAction.setIcon
-    path : "images/button_#{state}.png"
+    path : "images/button_#{state.replace('.', '_')}.png"
     tabId: tab.id
 
 # toggle recording when extension icon clicked
 chrome.browserAction.onClicked.addListener(changeToNextState)
 
+# TODO: get tab.url when state initially set to 'capture.actions'
+generator = new Capybara.SpecGenerator
 
-# general listener for all requests from content script
+###
+generateAndCopy: (generator) ->
+  specs = generator.generate()
+  $('#clipboard').val(specs).focus().select()
+  document.execCommand('copy')
+  specs
+###
+
 listener = (request, sender, sendResponse) ->
   switch request.name
-    when 'copy'
-      $textarea = $('#clipboard').val(request.text).focus().select()
-      document.execCommand('copy')
     when 'captured'
-      console.log 'captured:', request
+      console.log "captured!", request.data
 
 
 chrome.extension.onRequest.addListener listener

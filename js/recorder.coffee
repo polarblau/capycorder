@@ -1,23 +1,43 @@
-# TODO: move this out into a own file or utilities space
-window.Clipboard =
-  copy: (text) ->
-    # #execCommand is only available to background pages
-    chrome.extension.sendRequest name: 'copy', text: text
-
-# TODO: wrap these into methods?
-$ ->
-  capycorder = new Capycorder
-  # TODO: implement:
-  capycorder.bind 'captured', (data) ->
-    chrome.extension.sendRequest _.extend(name: 'captured', data)
-
-  # listen to state changes
+init = ->
   stateChangesListener = (request, sender, sendResponse) ->
-    if request.state == 'recording'
-      # TODO: moving the Capybara code generator out of the
-      #       Capycorder class will allow it to set this directly
-      #       in the background page:
-      capycorder.setTabURL(request.tabURL)
-    capycorder.switchState request.state
+
+    options =
+      scope: document
+      afterCapture: (dataAsJSON) ->
+        chrome.extension.sendRequest name: 'captured', data: dataAsJSON
+
+    actionsRecorder = new Capybara.Recorders.Actions(options)
+    matchersRecorder = new Capybara.Recorders.Matchers(options)
+
+    switch request.state
+      when 'capture.actions'
+        actionsRecorder.start()
+      when 'capture.matchers'
+        # TODO: enable highlighting
+        actionsRecorder.stop()
+        matchersRecorder.start()
+      when 'generate'
+        # TODO: disable highlighting
+        matchersRecorder.stop()
 
   chrome.extension.onRequest.addListener(stateChangesListener)
+
+#
+
+$(document).ready(init)
+
+###
+@highlighter = new SelectionBox
+
+  _enableHighlighting: ->
+    $(document).on ['mousemove', @namespace].join('.'), (e) =>
+      e.preventDefault()
+      e.stopPropagation()
+      $('body').css('cursor', 'crosshair')
+      @highlighter.highlight(e.target)
+
+  _disableHighlighting: ->
+    $(document).off ['mousemove', @namespace].join('.')
+    $('body').css('cursor', '')
+    @highlighter.hide()
+###

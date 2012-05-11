@@ -33,7 +33,7 @@
       if (selection.length) {
         return this.shouldHaveContent($el, selection);
       } else {
-        selector = $el.selector();
+        selector = $el.getSelector();
         return this.capture('shouldHaveSelector', selector);
       }
     };
@@ -41,29 +41,29 @@
     Matchers.prototype.shouldHaveContent = function($el) {
       var content, selector;
       content = window.getSelection().toString();
-      selector = $el.selector();
+      selector = $el.getSelector();
       return this.capture('shouldHaveContent', selector, null, {
         content: content
       });
     };
 
     Matchers.prototype.capture = function(name, selector, scope, options) {
-      var action;
+      var matcher;
       if (scope == null) {
         scope = null;
       }
       if (options == null) {
         options = {};
       }
-      action = {
+      matcher = {
         type: this.namespace,
         name: name,
         selector: selector,
         scope: scope,
         options: options
       };
-      this.actions.push(action);
-      return this.afterCaptureCallback(action);
+      this.matchers.push(matcher);
+      return this.afterCaptureCallback(matcher);
     };
 
     Matchers.prototype._nsevent = function(event) {

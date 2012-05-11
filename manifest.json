@@ -14,11 +14,12 @@
     "run_at": "document_start",
     "js": [
       "js/lib/jquery.js",
-      "js/lib/jquery.selector.js",
+      "js/lib/jquery.get_locator.js",
+      "js/lib/jquery.get_selector.js",
+      "js/lib/highlighter.js",
       "js/lib/underscore.js",
-      "js/lib/capycorder.js",
-      "js/lib/locator_generator.js",
-      "js/lib/selection_box.js",
+      "js/lib/capybara/recorders/actions.js",
+      "js/lib/capybara/recorders/matchers.js",
       "js/recorder.js"
     ]
   }],
