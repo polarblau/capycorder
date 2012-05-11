@@ -18,6 +18,7 @@
       "js/lib/underscore.js",
       "js/lib/capycorder.js",
       "js/lib/locator_generator.js",
+      "js/lib/selection_box.js",
       "js/recorder.js"
     ]
   }],

@@ -41,6 +41,7 @@ class Capycorder
 
   constructor: ->
     @locator = new LocatorGenerator
+    @highlighter = new SelectionBox
 
   # TODO: rename to something less chrome-relevant?
   # TODO: maybe this should even go into the background?
@@ -56,6 +57,7 @@ class Capycorder
       when 'confirming'
         @_detachRecordingEvents()
         @_attachConfirmingEvents()
+        @_enableHighlighting()
       when 'printing'
         @_detachConfirmingEvents()
         # TODO: Move this to the background page
@@ -73,6 +75,13 @@ class Capycorder
     $(document).trigger [event, @namespace].join('.'), [data]
 
   #
+
+  _enableHighlighting: ->
+    $(document).on 'mousemove', (e) =>
+      e.preventDefault()
+      e.stopPropagation()
+      @highlighter.highlight(e.target)
+
 
   _attachRecordingEvents: ->
     # TODO: use delegate:

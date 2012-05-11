@@ -5,17 +5,19 @@ window.Clipboard =
     chrome.extension.sendRequest name: 'copy', text: text
 
 # TODO: wrap these into methods?
-capycorder = new Capycorder
-capycorder.bind 'captured', (data) ->
-  chrome.extension.sendRequest _.extend(name: 'captured', data)
+$ ->
+  capycorder = new Capycorder
+  # TODO: implement:
+  capycorder.bind 'captured', (data) ->
+    chrome.extension.sendRequest _.extend(name: 'captured', data)
 
-# listen to state changes
-stateChangesListener = (request, sender, sendResponse) ->
-  if request.state == 'recording'
-    # TODO: moving the Capybara code generator out of the
-    #       Capycorder class will allow it to set this directly
-    #       in the background page:
-    capycorder.setTabURL(request.tabURL)
-  capycorder.switchState request.state
+  # listen to state changes
+  stateChangesListener = (request, sender, sendResponse) ->
+    if request.state == 'recording'
+      # TODO: moving the Capybara code generator out of the
+      #       Capycorder class will allow it to set this directly
+      #       in the background page:
+      capycorder.setTabURL(request.tabURL)
+    capycorder.switchState request.state
 
-chrome.extension.onRequest.addListener(stateChangesListener)
+  chrome.extension.onRequest.addListener(stateChangesListener)

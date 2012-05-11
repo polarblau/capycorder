@@ -60,6 +60,7 @@
 
       this.attachFile = __bind(this.attachFile, this);
       this.locator = new LocatorGenerator;
+      this.highlighter = new SelectionBox;
     }
 
     Capycorder.prototype.setTabURL = function(url) {
@@ -74,6 +75,7 @@
         case 'confirming':
           this._detachRecordingEvents();
           this._attachConfirmingEvents();
+          this._enableHighlighting();
           break;
         case 'printing':
           this._detachConfirmingEvents();
@@ -93,6 +95,15 @@
 
     Capycorder.prototype.trigger = function(event, data) {
       return $(document).trigger([event, this.namespace].join('.'), [data]);
+    };
+
+    Capycorder.prototype._enableHighlighting = function() {
+      var _this = this;
+      return $(document).on('mousemove', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return _this.highlighter.highlight(e.target);
+      });
     };
 
     Capycorder.prototype._attachRecordingEvents = function() {

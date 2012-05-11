@@ -7,7 +7,8 @@
 	Released under the MIT License.
 
 */
-
+// TODO: ensure as short selector as possible by
+//       testing for result length for current selection in every round
 jQuery.fn.extend({
 	getSelector: function(path) {
 		// The first time this function is called, path won't be defined.
