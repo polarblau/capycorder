@@ -102,6 +102,7 @@
       return $(document).on('mousemove', function(e) {
         e.preventDefault();
         e.stopPropagation();
+        $('body').css('cursor', 'crosshair');
         return _this.highlighter.highlight(e.target);
       });
     };

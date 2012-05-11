@@ -80,6 +80,7 @@ class Capycorder
     $(document).on 'mousemove', (e) =>
       e.preventDefault()
       e.stopPropagation()
+      $('body').css('cursor', 'crosshair')
       @highlighter.highlight(e.target)
 
 
