@@ -78,11 +78,7 @@ class Capybara.Recorders.Actions
   fillIn: (e) =>
     $el = $(e.target)
     locator = $el.getLocator ['name', 'id', 'label']
-    previous = _.last(@actions)
-    if previous && previous.name == 'fillIn' && previous.locator == locator
-      previous.options.with = $el.val()
-    else
-      @findScopeAndCapture 'fillIn', $el, locator, width: $el.val()
+    @findScopeAndCapture 'fillIn', $el, locator, with: $el.val()
 
   select: (e) =>
     $el = $(e.target)
@@ -95,8 +91,9 @@ class Capybara.Recorders.Actions
     @capture name, locator, @_formScope($el), options
 
   capture: (name, locator, scope, options = {}) ->
+    # TODO: debounce:
     action =
-      type   : @namespace,
+      type   : 'action',
       name   : name,
       locator: locator,
       scope  : scope
@@ -110,7 +107,7 @@ class Capybara.Recorders.Actions
 
   _formScope: ($el) ->
     if ($form = $el.parents('form')).length
-      $form.locator ['id']
+      $form.getLocator ['id']
     else
       null
 

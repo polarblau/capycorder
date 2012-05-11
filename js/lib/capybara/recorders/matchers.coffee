@@ -41,7 +41,7 @@ class Capybara.Recorders.Matchers
 
   capture: (name, selector, scope = null, options = {}) ->
     matcher =
-      type    : @namespace,
+      type    : 'matcher',
       name    : name,
       selector: selector,
       scope   : scope

@@ -16,28 +16,30 @@ init = ->
         # TODO: enable highlighting
         actionsRecorder.stop()
         matchersRecorder.start()
+        enableHighlighting()
       when 'generate'
-        # TODO: disable highlighting
         matchersRecorder.stop()
+        disableHighlighting()
 
   chrome.extension.onRequest.addListener(stateChangesListener)
+
+# Highlighting
+# TODO: move this into mini class?
+highlighter = null
+
+enableHighlighting = ->
+  highlighter ||= new SelectionBox
+  $(document).on 'mousemove.highlight', (e) =>
+    e.preventDefault()
+    e.stopPropagation()
+    $('body').css('cursor', 'crosshair')
+    highlighter.highlight(e.target)
+
+disableHighlighting = ->
+  $(document).off 'mousemove.highlight'
+  $('body').css('cursor', '')
+  highlighter.hide()
 
 #
 
 $(document).ready(init)
-
-###
-@highlighter = new SelectionBox
-
-  _enableHighlighting: ->
-    $(document).on ['mousemove', @namespace].join('.'), (e) =>
-      e.preventDefault()
-      e.stopPropagation()
-      $('body').css('cursor', 'crosshair')
-      @highlighter.highlight(e.target)
-
-  _disableHighlighting: ->
-    $(document).off ['mousemove', @namespace].join('.')
-    $('body').css('cursor', '')
-    @highlighter.hide()
-###

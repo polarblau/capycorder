@@ -110,17 +110,12 @@
     };
 
     Actions.prototype.fillIn = function(e) {
-      var $el, locator, previous;
+      var $el, locator;
       $el = $(e.target);
       locator = $el.getLocator(['name', 'id', 'label']);
-      previous = _.last(this.actions);
-      if (previous && previous.name === 'fillIn' && previous.locator === locator) {
-        return previous.options["with"] = $el.val();
-      } else {
-        return this.findScopeAndCapture('fillIn', $el, locator, {
-          width: $el.val()
-        });
-      }
+      return this.findScopeAndCapture('fillIn', $el, locator, {
+        "with": $el.val()
+      });
     };
 
     Actions.prototype.select = function(e) {
@@ -142,7 +137,7 @@
         options = {};
       }
       action = {
-        type: this.namespace,
+        type: 'action',
         name: name,
         locator: locator,
         scope: scope,
@@ -155,7 +150,7 @@
     Actions.prototype._formScope = function($el) {
       var $form;
       if (($form = $el.parents('form')).length) {
-        return $form.locator(['id']);
+        return $form.getLocator(['id']);
       } else {
         return null;
       }

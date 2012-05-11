@@ -56,7 +56,7 @@
         options = {};
       }
       matcher = {
-        type: this.namespace,
+        type: 'matcher',
         name: name,
         selector: selector,
         scope: scope,
