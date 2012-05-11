@@ -99,12 +99,18 @@
 
     Capycorder.prototype._enableHighlighting = function() {
       var _this = this;
-      return $(document).on('mousemove', function(e) {
+      return $(document).on(['mousemove', this.namespace].join('.'), function(e) {
         e.preventDefault();
         e.stopPropagation();
         $('body').css('cursor', 'crosshair');
         return _this.highlighter.highlight(e.target);
       });
+    };
+
+    Capycorder.prototype._disableHighlighting = function() {
+      $(document).off(['mousemove', this.namespace].join('.'));
+      $('body').css('cursor', '');
+      return this.highlighter.hide();
     };
 
     Capycorder.prototype._attachRecordingEvents = function() {

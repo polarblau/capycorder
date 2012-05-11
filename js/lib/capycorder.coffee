@@ -77,11 +77,16 @@ class Capycorder
   #
 
   _enableHighlighting: ->
-    $(document).on 'mousemove', (e) =>
+    $(document).on ['mousemove', @namespace].join('.'), (e) =>
       e.preventDefault()
       e.stopPropagation()
       $('body').css('cursor', 'crosshair')
       @highlighter.highlight(e.target)
+
+  _disableHighlighting: ->
+    $(document).off ['mousemove', @namespace].join('.')
+    $('body').css('cursor', '')
+    @highlighter.hide()
 
 
   _attachRecordingEvents: ->
