@@ -15,11 +15,11 @@ class Capybara.Recorders.Actions
     'click input[type=button]'   : 'clickButton'
     'click button'               : 'clickButton'
     'click a'                    : 'clickLink'
-    'keyup input[type=text]'     : 'fillIn'
-    'keyup input[type=password]' : 'fillIn'
-    'keyup input[type=email]'    : 'fillIn'
-    'keyup input[type=search]'   : 'fillIn'
-    'keyup textarea'             : 'fillIn'
+    'blur input[type=text]'      : 'fillIn'
+    'blur input[type=password]'  : 'fillIn'
+    'blur input[type=email]'     : 'fillIn'
+    'blur input[type=search]'    : 'fillIn'
+    'blur textarea'              : 'fillIn'
     'change select'              : 'select'
 
 
@@ -91,7 +91,6 @@ class Capybara.Recorders.Actions
     @capture name, locator, @_formScope($el), options
 
   capture: (name, locator, scope, options = {}) ->
-    # TODO: debounce:
     action =
       type   : 'action',
       name   : name,
