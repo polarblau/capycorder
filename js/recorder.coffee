@@ -1,4 +1,6 @@
 init = ->
+  chrome.extension.sendRequest name: 'loaded'
+
   stateChangesListener = (request, sender, sendResponse) ->
 
     options =

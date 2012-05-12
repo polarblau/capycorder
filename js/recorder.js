@@ -4,6 +4,9 @@
 
   init = function() {
     var stateChangesListener;
+    chrome.extension.sendRequest({
+      name: 'loaded'
+    });
     stateChangesListener = function(request, sender, sendResponse) {
       var actionsRecorder, matchersRecorder, options;
       options = {

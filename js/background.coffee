@@ -1,37 +1,51 @@
-# TODO: wrap these things into methods?
+# create a new process for each tab
+processes = {}
 
-specs = null
+findOrCreateTabProcess = (tab) ->
+  process = processes[tab.id]
 
-# state for the whole extension:
-state  = 'off'
-states = 'capture.actions capture.matchers generate off'.split(' ')
+  unless process?
+    process = new TabProcess
+      tab          : tab
+      onStateChange: (state) ->
+        chrome.tabs.sendRequest tab.id, state: state
+        chrome.browserAction.setIcon
+          path : "images/button_#{state.replace('.', '_')}.png"
+          tabId: tab.id
+    processes[tab.id] = process
+  process
 
-changeToNextState = (tab) ->
-  state = states[_.indexOf(states, state) + 1] || _.first(states)
+# ------------------------------------------------------------------------------
+# Listen to incoming requests from tabs:
+#
+tabsListener = (request, sender, sendResponse) ->
+  process = findOrCreateTabProcess sender.tab
 
-  # broadcast new state to tab
-  chrome.tabs.sendRequest tab.id, state: state, tabURL: tab.url, ->
+  switch request.name
+    when 'captured'
+      process.specs.add request.data
 
-  # update button
-  chrome.browserAction.setIcon
-    path : "images/button_#{state.replace('.', '_')}.png"
-    tabId: tab.id
+    when 'loaded'
+      process.setState
 
-  switch state
-    when 'capture.actions'
-      specs = new Capybara.Specs(tabURL: tab.url)
+chrome.extension.onRequest.addListener tabsListener
+
+
+# ------------------------------------------------------------------------------
+# Listen to button click events:
+#
+buttonListener = (tab) ->
+  process = findOrCreateTabProcess tab
+  process.toNextState()
+
+
+  # TODO: move into tab process?
+  switch process.getState()
     when 'generate'
-      output = specs.generate()
+      output = process.specs.generate()
       $('#clipboard').val(output).focus().select()
       document.execCommand('copy')
 
-# toggle recording when extension icon clicked
-chrome.browserAction.onClicked.addListener(changeToNextState)
 
+chrome.browserAction.onClicked.addListener buttonListener
 
-listener = (request, sender, sendResponse) ->
-  switch request.name
-    when 'captured'
-      specs.add request.data
-
-chrome.extension.onRequest.addListener listener
