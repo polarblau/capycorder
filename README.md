@@ -2,15 +2,18 @@
 
 Chrome extension, generating Capybara request spec steps based on user interaction.
 
-## The plan!
+## Whishlist
 
-* ✔ ~~get basic functionality working using the current structure~~
-* ✔ ~~add highlighting on hover~~
-* instantiate when DOM loaded (highlighter) and indicate before in
-  button icon (disabled?)
-* move storage to background to record session over page refreshes
-* test in actual project to get the capybara syntax right
-* write "integration" tests
-* extract classes/singletons as described in TODOs and refactor
-* write unit tests
-* publish!
+* New icons
+* Unit tests
+* Helpers (path, highlighting, ...)
+* Move Highlighting into jQuery plugin?
+* Improve $.getSelector
+* GUI:
+** Instructions
+** Input test name
+** State indicator
+* Options page
+** Support for TestUnit syntax
+** Support for CSS/XPATH
+** Write file instead C&P?
