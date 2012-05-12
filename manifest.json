@@ -13,11 +13,11 @@
     "matches": ["\u003Call_urls\u003E"],
     "run_at": "document_start",
     "js": [
-      "js/lib/jquery.js",
-      "js/lib/jquery.get_locator.js",
-      "js/lib/jquery.get_selector.js",
-      "js/lib/highlighter.js",
-      "js/lib/underscore.js",
+      "js/lib/vendor/jquery.js",
+      "js/lib/jquery_plugins/jquery.get_locator.js",
+      "js/lib/jquery_plugins/jquery.get_selector.js",
+      "js/lib/vendor/highlighter.js",
+      "js/lib/vendor/underscore.js",
       "js/lib/capybara/recorders/actions.js",
       "js/lib/capybara/recorders/matchers.js",
       "js/recorder.js"
