@@ -10,10 +10,10 @@ Chrome extension, generating Capybara request spec steps based on user interacti
 * Move Highlighting into jQuery plugin?
 * Improve $.getSelector
 * GUI:
-** Instructions
-** Input test name
-** State indicator
+  * Instructions
+  * Input test name
+  * State indicator
 * Options page
-** Support for TestUnit syntax
-** Support for CSS/XPATH
-** Write file instead C&P?
+  * Support for TestUnit syntax
+  * Support for CSS/XPATH
+  * Write file instead C&P?
