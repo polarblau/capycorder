@@ -8,12 +8,19 @@ findOrCreateTabProcess = (tab) ->
     process = new TabProcess
       tab          : tab
       onStateChange: (state) ->
-        chrome.tabs.sendRequest tab.id, state: state
-        chrome.browserAction.setIcon
-          path : "images/button_#{state.replace('.', '_')}.png"
-          tabId: tab.id
+        setTabButtonState tab, state
+        broadcastState tab, state
     processes[tab.id] = process
   process
+
+setTabButtonState = (tab, state) ->
+  chrome.browserAction.setIcon
+    path : "images/button_#{state.replace('.', '_')}.png"
+    tabId: tab.id
+
+broadcastState = (tab, state) ->
+  data = name: 'stateChanged', state: state
+  chrome.tabs.sendRequest tab.id, data
 
 # ------------------------------------------------------------------------------
 # Listen to incoming requests from tabs:
@@ -26,7 +33,13 @@ tabsListener = (request, sender, sendResponse) ->
       process.specs.add request.data
 
     when 'loaded'
-      process.setState
+      state = process.getState()
+      setTabButtonState sender.tab, state
+      broadcastState sender.tab, state
+
+    when 'named'
+      process.specs.setName request.specsName
+      process.toNextState()
 
 chrome.extension.onRequest.addListener tabsListener
 
@@ -38,13 +51,14 @@ buttonListener = (tab) ->
   process = findOrCreateTabProcess tab
   process.toNextState()
 
-
   # TODO: move into tab process?
   switch process.getState()
     when 'generate'
       output = process.specs.generate()
       $('#clipboard').val(output).focus().select()
       document.execCommand('copy')
+      # remove process
+      delete processes[process.id]
 
 
 chrome.browserAction.onClicked.addListener buttonListener

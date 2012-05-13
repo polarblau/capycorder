@@ -1,5 +1,5 @@
 # TODO: settings?
-STATES = ['capture.actions', 'capture.matchers', 'generate', 'off']
+STATES = ['name', 'capture.actions', 'capture.matchers', 'generate', 'off']
 
 class TabProcess
 
@@ -14,6 +14,10 @@ class TabProcess
 
   getState: ->
     @state
+
+  getInfo: ->
+    state: @getState()
+    isNamed: @specs.name?
 
   setState: (state) ->
     @state = state

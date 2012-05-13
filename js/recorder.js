@@ -3,36 +3,55 @@
   var disableHighlighting, enableHighlighting, highlighter, init;
 
   init = function() {
-    var stateChangesListener;
+    var recorder, ui, _ref;
+    _ref = [new RecorderUI, null], ui = _ref[0], recorder = _ref[1];
     chrome.extension.sendRequest({
       name: 'loaded'
     });
-    stateChangesListener = function(request, sender, sendResponse) {
-      var actionsRecorder, matchersRecorder, options;
-      options = {
-        scope: document,
-        afterCapture: function(dataAsJSON) {
-          return chrome.extension.sendRequest({
-            name: 'captured',
-            data: dataAsJSON
-          });
-        }
-      };
-      actionsRecorder = new Capybara.Recorders.Actions(options);
-      matchersRecorder = new Capybara.Recorders.Matchers(options);
-      switch (request.state) {
-        case 'capture.actions':
-          return actionsRecorder.start();
-        case 'capture.matchers':
-          actionsRecorder.stop();
-          matchersRecorder.start();
-          return enableHighlighting();
-        case 'generate':
-          matchersRecorder.stop();
-          return disableHighlighting();
+    return chrome.extension.onRequest.addListener(function(request) {
+      var recorderOptions, state;
+      switch (request.name) {
+        case 'stateChanged':
+          state = request.state;
+          recorderOptions = {
+            scope: document,
+            afterCapture: function(dataAsJSON) {
+              return chrome.extension.sendRequest({
+                name: 'captured',
+                data: dataAsJSON
+              });
+            }
+          };
+          switch (state) {
+            case 'name':
+              ui.showNamePrompt(function(name) {
+                return chrome.extension.sendRequest({
+                  name: 'named',
+                  specsName: name
+                });
+              });
+              break;
+            case 'capture.actions':
+              recorder = new Capybara.Recorders.Actions(recorderOptions);
+              recorder.start();
+              break;
+            case 'capture.matchers':
+              recorder.stop();
+              recorder = new Capybara.Recorders.Matchers(recorderOptions);
+              recorder.start();
+              enableHighlighting();
+              break;
+            case 'generate':
+              if (recorder != null) {
+                recorder.stop();
+              }
+              disableHighlighting();
+          }
+          if (state !== 'off' && state !== 'name') {
+            return ui.show(state);
+          }
       }
-    };
-    return chrome.extension.onRequest.addListener(stateChangesListener);
+    });
   };
 
   highlighter = null;
@@ -49,9 +68,11 @@
   };
 
   disableHighlighting = function() {
-    $(document).off('mousemove.highlight');
-    $('body').css('cursor', '');
-    return highlighter.hide();
+    if (highlighter != null) {
+      $(document).off('mousemove.highlight');
+      $('body').css('cursor', '');
+      return highlighter.hide();
+    }
   };
 
   $(document).ready(init);

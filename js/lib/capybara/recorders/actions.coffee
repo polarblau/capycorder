@@ -116,7 +116,7 @@ class Capybara.Recorders.Actions
   _attachEvents: ->
     for target, method of @events
       [event, selector] = target.split(' ')
-      @$scope.delegate selector, event, @[method]
+      @$scope.delegate selector, @_nsevent(event), @[method]
 
   _detachEvents: ->
     @$scope.undelegate ".#{@namespace}"

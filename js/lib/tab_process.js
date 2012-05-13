@@ -2,7 +2,7 @@
 (function() {
   var STATES, TabProcess;
 
-  STATES = ['capture.actions', 'capture.matchers', 'generate', 'off'];
+  STATES = ['name', 'capture.actions', 'capture.matchers', 'generate', 'off'];
 
   TabProcess = (function() {
 
@@ -23,6 +23,13 @@
 
     TabProcess.prototype.getState = function() {
       return this.state;
+    };
+
+    TabProcess.prototype.getInfo = function() {
+      return {
+        state: this.getState(),
+        isNamed: this.specs.name != null
+      };
     };
 
     TabProcess.prototype.setState = function(state) {

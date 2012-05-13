@@ -167,7 +167,7 @@
       for (target in _ref) {
         method = _ref[target];
         _ref1 = target.split(' '), event = _ref1[0], selector = _ref1[1];
-        _results.push(this.$scope.delegate(selector, event, this[method]));
+        _results.push(this.$scope.delegate(selector, this._nsevent(event), this[method]));
       }
       return _results;
     };

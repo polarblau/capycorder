@@ -1,29 +1,43 @@
 init = ->
+  # these need to be available across state changes
+  [ui, recorder] = [new RecorderUI, null]
+
+  # tell the background that the tab has been loaded
   chrome.extension.sendRequest name: 'loaded'
 
-  stateChangesListener = (request, sender, sendResponse) ->
+  # listen for messages from the background
+  chrome.extension.onRequest.addListener (request) ->
+    switch request.name
+      when 'stateChanged'
+        state = request.state
 
-    options =
-      scope: document
-      afterCapture: (dataAsJSON) ->
-        chrome.extension.sendRequest name: 'captured', data: dataAsJSON
+        recorderOptions =
+          scope: document
+          afterCapture: (dataAsJSON) ->
+            chrome.extension.sendRequest name: 'captured', data: dataAsJSON
 
-    actionsRecorder = new Capybara.Recorders.Actions(options)
-    matchersRecorder = new Capybara.Recorders.Matchers(options)
+        switch state
+          when 'name'
+            ui.showNamePrompt (name) ->
+              chrome.extension.sendRequest
+                name: 'named', specsName: name
 
-    switch request.state
-      when 'capture.actions'
-        actionsRecorder.start()
-      when 'capture.matchers'
-        # TODO: enable highlighting
-        actionsRecorder.stop()
-        matchersRecorder.start()
-        enableHighlighting()
-      when 'generate'
-        matchersRecorder.stop()
-        disableHighlighting()
+          when 'capture.actions'
+            recorder = new Capybara.Recorders.Actions recorderOptions
+            recorder.start()
 
-  chrome.extension.onRequest.addListener(stateChangesListener)
+          when 'capture.matchers'
+            recorder.stop()# if recorder?
+            recorder = new Capybara.Recorders.Matchers recorderOptions
+            recorder.start()
+            enableHighlighting()
+
+          when 'generate'
+            recorder.stop() if recorder?
+            disableHighlighting()
+
+        ui.show state if state not in ['off', 'name']
+
 
 # Highlighting
 # TODO: move this into mini class?
@@ -38,9 +52,10 @@ enableHighlighting = ->
     highlighter.highlight(e.target)
 
 disableHighlighting = ->
-  $(document).off 'mousemove.highlight'
-  $('body').css('cursor', '')
-  highlighter.hide()
+  if highlighter?
+    $(document).off 'mousemove.highlight'
+    $('body').css('cursor', '')
+    highlighter.hide()
 
 #
 

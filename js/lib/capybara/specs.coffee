@@ -15,13 +15,17 @@ class Capybara.Specs
       when 'matcher'
         @generators.push new Capybara.Generators.Matcher(data)
 
+  setName: (name) ->
+    @name = name
+
+
   # TODO: it might make sense to implement the scope as mini class
   #       this model is still not flexible enough, either
   generate: ->
     [depth, strings, scope] = [0, [], null]
 
     # opening RSPEC's #it
-    strings.push 'it "SHOULDDOSOMETHING" do'
+    strings.push "it '#{@name || "SHOULDDOSOMETHING"}' do"
     depth++
 
     # call #visit

@@ -12,6 +12,9 @@
     "all_frames": true,
     "matches": ["\u003Call_urls\u003E"],
     "run_at": "document_start",
+    "css": [
+      "css/ui.css"
+    ],
     "js": [
       "js/lib/vendor/jquery.js",
       "js/lib/jquery_plugins/jquery.get_locator.js",
@@ -20,6 +23,7 @@
       "js/lib/vendor/underscore.js",
       "js/lib/capybara/recorders/actions.js",
       "js/lib/capybara/recorders/matchers.js",
+      "js/recorder_ui.js",
       "js/recorder.js"
     ]
   }],

@@ -22,10 +22,14 @@
       }
     };
 
+    Specs.prototype.setName = function(name) {
+      return this.name = name;
+    };
+
     Specs.prototype.generate = function() {
       var depth, generator, generatorScope, path, scope, strings, _i, _len, _ref, _ref1;
       _ref = [0, [], null], depth = _ref[0], strings = _ref[1], scope = _ref[2];
-      strings.push('it "SHOULDDOSOMETHING" do');
+      strings.push("it '" + (this.name || "SHOULDDOSOMETHING") + "' do");
       depth++;
       path = this._parseURL(this.tabURL).pathname;
       strings.push(this._indent("visit('" + path + "')", depth));
