@@ -44,6 +44,7 @@ class RecorderUI
       @_showUI()
       $visible
         .find('input')
+        .val('')
         .focus()
         .end()
         .find('a')
@@ -62,7 +63,7 @@ class RecorderUI
       selector = ".#{state.replace('.', '-')}"
       @$ui.find(selector).show()
       @_showUI()
-      @$ui.one 'mouseover', => @_hideVisible()
+      @$ui.one 'mouseover.recorderui', => @_hideVisible()
       @hideAfter = setTimeout @_hideVisible, @delayToHide * 1000
 
   _showUI: (block = ->) ->
@@ -73,6 +74,7 @@ class RecorderUI
 
   _hideVisible: (block = ->) =>
     clearTimeout @hideAfter if @hideAfter?
+    @$ui.off 'mouseover.recorderui'
     $visible = @$ui.find('div:visible')
     if $visible.length
       @_hideUI =>

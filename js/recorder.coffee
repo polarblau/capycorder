@@ -27,7 +27,8 @@ init = ->
             recorder.start()
 
           when 'capture.matchers'
-            recorder.stop()# if recorder?
+            blurFocused()
+            recorder.stop() if recorder?
             recorder = new Capybara.Recorders.Matchers recorderOptions
             recorder.start()
             enableHighlighting()
@@ -38,6 +39,13 @@ init = ->
 
         ui.show state if state not in ['off', 'name']
 
+  # Makes sure that all input values are included
+  window.onbeforeunload = blurFocused
+
+
+blurFocused = ->
+  $('input:focus').blur()
+  null
 
 # Highlighting
 # TODO: move this into mini class?

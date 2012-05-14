@@ -5,6 +5,9 @@ class Capybara.Specs
   generators: []
 
   constructor: (options) ->
+    # if a second set of specs is instanciated
+    # this array is not purged for some reason
+    @generators = []
     @tabURL = options.tabURL
 
   add: (data) ->

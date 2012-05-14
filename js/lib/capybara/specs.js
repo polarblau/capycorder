@@ -10,6 +10,7 @@
     Specs.prototype.generators = [];
 
     function Specs(options) {
+      this.generators = [];
       this.tabURL = options.tabURL;
     }
 

@@ -34,7 +34,7 @@
         var $visible;
         $visible = _this.$ui.find('.prompt-name').show();
         _this._showUI();
-        return $visible.find('input').focus().end().find('a').one('click', function() {
+        return $visible.find('input').val('').focus().end().find('a').one('click', function() {
           _this._hideVisible();
           return block(null);
         }).end().find('button').one('click', function() {
@@ -53,7 +53,7 @@
         selector = "." + (state.replace('.', '-'));
         _this.$ui.find(selector).show();
         _this._showUI();
-        _this.$ui.one('mouseover', function() {
+        _this.$ui.one('mouseover.recorderui', function() {
           return _this._hideVisible();
         });
         return _this.hideAfter = setTimeout(_this._hideVisible, _this.delayToHide * 1000);
@@ -93,6 +93,7 @@
       if (this.hideAfter != null) {
         clearTimeout(this.hideAfter);
       }
+      this.$ui.off('mouseover.recorderui');
       $visible = this.$ui.find('div:visible');
       if ($visible.length) {
         return this._hideUI(function() {

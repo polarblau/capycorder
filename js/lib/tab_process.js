@@ -43,6 +43,10 @@
       return this.setState(state);
     };
 
+    TabProcess.prototype.kill = function() {
+      return delete this.specs;
+    };
+
     return TabProcess;
 
   })();

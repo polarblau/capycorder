@@ -77,7 +77,7 @@
         locator = $el.getLocator(['name', 'id', 'label']);
         return this.findScopeAndCapture('check', $el, locator);
       } else {
-        return this.uncheck($el);
+        return this.uncheck(e);
       }
     };
 

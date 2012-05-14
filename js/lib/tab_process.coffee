@@ -27,5 +27,8 @@ class TabProcess
     state = STATES[_.indexOf(STATES, @state) + 1] || _.first(STATES)
     @setState state
 
+  kill: ->
+    delete @specs
+
 
 window.TabProcess = TabProcess

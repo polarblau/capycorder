@@ -57,7 +57,6 @@ buttonListener = (tab) ->
       output = process.specs.generate()
       $('#clipboard').val(output).focus().select()
       document.execCommand('copy')
-      # remove process
       delete processes[process.id]
 
 

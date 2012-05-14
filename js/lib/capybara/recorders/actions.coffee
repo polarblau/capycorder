@@ -53,7 +53,7 @@ class Capybara.Recorders.Actions
       locator = $el.getLocator ['name', 'id', 'label']
       @findScopeAndCapture 'check', $el, locator
     else
-      @uncheck $el
+      @uncheck e
 
   uncheck: (e) =>
     $el = $(e.target)
