@@ -1,5 +1,5 @@
 #capycorder {
-  position: absolute;
+  position: fixed;
   right: 5px;
   left: 5px;
   top: -200px;
@@ -9,11 +9,17 @@
   font-family: Helvetica, Arial, sans-serif !important;
   color: #fff !important;
   border-radius: 0 0 3px 3px !important;
+  text-align: left;
   -webkit-box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4) !important;
 }
 
 #capycorder > div {
   margin: 10px !important;
+}
+
+#capycorder button {
+  padding: auto !important;
+  margin: auto !important;
 }
 
 #capycorder a {
@@ -29,18 +35,27 @@
 
 #capycorder > .prompt-name {
   z-index 99999 !important;
+  display: table;
 }
 
-#capycorder > .prompt-name > #capycorder-spec-name {
+#capycorder > .prompt-name >
+
+#capycorder > .prompt-name > .capycorder-input-wrapper {
+  display: inline-block !important;
+  position: relative !important;
+  margin: 0 -2px -3px -2px !important;
+  padding: 0 0 3px 0 !important;
+  border-bottom: 1px dotted #fff !important;
+}
+
+#capycorder > .prompt-name > .capycorder-input-wrapper > #capycorder-spec-name {
   font-size: 14px !important;
-  font-family: Helvetica, Arial, sans-serif !important;
+  position: absolute;
+  left: 0;
+  right: 0;
+  font-family: Monaco, Courier, monospace !important;
   color: #fff !important;
   background: transparent !important;
   border: none !important;
   outline: none !important;
-  border-bottom: 1px dotted #fff !important;
-  width: 30% !important;
-  position: relative !important;
-  margin: 0 -2px -3px -2px !important;
-  padding: 0 0 3px 0 !important;
 }

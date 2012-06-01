@@ -13,7 +13,7 @@
 
     RecorderUI.prototype.hideAfter = null;
 
-    RecorderUI.prototype.template = "<div id=\"capycorder\">\n  <div class=\"prompt-name\">\n    <strong>Capycorder</strong>\n    Name your test. It \"\n    <input type=\"text\" id=\"capycorder-spec-name\" placeholder=\"should do something\" />\n    \"\n    <button>Okay</button>\n    <a href=\"#\" class=\"cancel\">Cancel</a>\n  </div>\n  <div class=\"capture-actions\">\n    <strong>Capycorder</strong>\n    Interact with the page to record actions.\n  </div>\n  <div class=\"capture-matchers\">\n    <strong>Capycorder</strong>\n    Select text ranges or elements to record matchers.\n  </div>\n  <div class=\"generate\">\n    <strong>Capycorder</strong>\n    Thanks! The recorded spec has been copied to the clipboard.\n  </div>\n</div>";
+    RecorderUI.prototype.template = "<div id=\"capycorder\">\n  <div class=\"prompt-name\">\n    <div class=\"capycorder-label\">\n      <strong>\n        <img src=\"" + (chrome.extension.getURL('images/button_off.png')) + "\" />\n      </strong>\n      Name your test. It\n    </div>\n    <div class=\"capycorder-input-wrapper\">\n      <input type=\"text\" id=\"capycorder-spec-name\" placeholder=\"should do something\" />\n    </div>\n    <div class=\"capycorder-actions\">\n      <button>Okay</button>\n      <a href=\"#\" class=\"cancel\">Cancel</a>\n    </div>\n  </div>\n  <div class=\"capture-actions\">\n    <strong>Capycorder</strong>\n    Interact with the page to record actions.\n  </div>\n  <div class=\"capture-matchers\">\n    <strong>Capycorder</strong>\n    Select text ranges or elements to record matchers.\n  </div>\n  <div class=\"generate\">\n    <strong>Capycorder</strong>\n    Thanks! The recorded spec has been copied to the clipboard.\n  </div>\n</div>";
 
     function RecorderUI() {
       this._hideVisible = __bind(this._hideVisible, this);
@@ -22,7 +22,7 @@
 
     RecorderUI.prototype.create = function() {
       this.$ui = $(this.template);
-      return this.$ui.appendTo('body').find('div').hide();
+      return this.$ui.appendTo('body:first').find('> div').hide();
     };
 
     RecorderUI.prototype.showNamePrompt = function(block) {

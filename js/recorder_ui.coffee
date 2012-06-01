@@ -9,12 +9,19 @@ class RecorderUI
     """
       <div id="capycorder">
         <div class="prompt-name">
-          <strong>Capycorder</strong>
-          Name your test. It "
-          <input type="text" id="capycorder-spec-name" placeholder="should do something" />
-          "
-          <button>Okay</button>
-          <a href="#" class="cancel">Cancel</a>
+          <div class="capycorder-label">
+            <strong>
+              <img src="#{chrome.extension.getURL('images/button_off.png')}" />
+            </strong>
+            Name your test. It
+          </div>
+          <div class="capycorder-input-wrapper">
+            <input type="text" id="capycorder-spec-name" placeholder="should do something" />
+          </div>
+          <div class="capycorder-actions">
+            <button>Okay</button>
+            <a href="#" class="cancel">Cancel</a>
+          </div>
         </div>
         <div class="capture-actions">
           <strong>Capycorder</strong>
@@ -36,7 +43,7 @@ class RecorderUI
 
   create: ->
     @$ui = $(@template)
-    @$ui.appendTo('body').find('div').hide()
+    @$ui.appendTo('body:first').find('> div').hide()
 
   showNamePrompt: (block = ->) ->
     @_hideVisible =>
