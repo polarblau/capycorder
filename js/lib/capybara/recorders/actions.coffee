@@ -26,7 +26,7 @@ class Capybara.Recorders.Actions
   # ----------------------------------------------------------------------------
   # INSTANCE METHODS
 
-  constructor: (options) ->
+  constructor: (options = {}) ->
     @$scope = $(options.scope || document)
     @afterCaptureCallback = options.afterCapture ? ->
 

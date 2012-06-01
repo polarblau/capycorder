@@ -32,6 +32,10 @@
     };
 
     function Actions(options) {
+      var _ref;
+      if (options == null) {
+        options = {};
+      }
       this.select = __bind(this.select, this);
 
       this.fillIn = __bind(this.fillIn, this);
@@ -48,7 +52,6 @@
 
       this.attachFile = __bind(this.attachFile, this);
 
-      var _ref;
       this.$scope = $(options.scope || document);
       this.afterCaptureCallback = (_ref = options.afterCapture) != null ? _ref : function() {};
     }

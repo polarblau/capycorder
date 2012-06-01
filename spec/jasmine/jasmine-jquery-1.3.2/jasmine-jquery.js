@@ -286,3 +286,4 @@ afterEach(function() {
   jasmine.getFixtures().cleanUp();
   jasmine.JQuery.events.cleanUp();
 });
+
