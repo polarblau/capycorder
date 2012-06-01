@@ -44,6 +44,9 @@
     };
 
     function Action(data) {
+      if (data == null) {
+        data = {};
+      }
       this.data = data;
     }
 

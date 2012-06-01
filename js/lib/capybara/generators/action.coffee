@@ -36,7 +36,7 @@ class Capybara.Generators.Action
 
   #
 
-  constructor: (data) ->
+  constructor: (data = {}) ->
     @data = data
 
   isScoped: ->
