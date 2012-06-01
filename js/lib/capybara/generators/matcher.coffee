@@ -14,7 +14,7 @@ class Capybara.Generators.Matcher
     ["within_form('#{locator}') do", "end"]
 
 
-  constructor: (data) ->
+  constructor: (data = {}) ->
     @data = data
 
   isScoped: ->

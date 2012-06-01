@@ -23,6 +23,9 @@
     };
 
     function Matcher(data) {
+      if (data == null) {
+        data = {};
+      }
       this.data = data;
     }
 
