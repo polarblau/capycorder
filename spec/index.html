@@ -1,72 +1,92 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Jasmine Test Runner</title>
-        <link rel="stylesheet" type="text/css" href="jasmine/jasmine-1.1.0/jasmine.css">
-        <script type="text/javascript" src="jasmine/jasmine-1.1.0/jasmine.js"></script>
-        <script type="text/javascript" src="jasmine/jasmine-1.1.0/jasmine-html.js"></script>
-        <script type="text/javascript" src="jasmine/jasmine-jquery-1.3.1/jasmine-jquery.js"></script>
+  <head>
+    <title>Jasmine Spec Runner</title>
+    <link rel="shortcut icon" type="image/png" href="lib/jasmine-1.2.0/jasmine_favicon.png">
+    <link rel="stylesheet" type="text/css" href="lib/jasmine-1.2.0/jasmine.css">
+    <script type="text/javascript" src="lib/jasmine-1.2.0/jasmine.js"></script>
+    <script type="text/javascript" src="lib/jasmine-1.2.0/jasmine-html.js"></script>
 
-        <!-- vendor -->
-        <!-- VENDOR: ######################################### -->
-        <script type="text/javascript" src="../js/lib/vendor/jquery.js"></script>
-        <script type="text/javascript" src="../js/lib/vendor/underscore.js"></script>
-        <script type="text/javascript" src="../js/lib/vendor/highlighter.js"></script>
+    <!-- vendor -->
+    <!-- VENDOR: ######################################### -->
+    <script type="text/javascript" src="../js/lib/vendor/jquery.js"></script>
+    <script type="text/javascript" src="../js/lib/vendor/underscore.js"></script>
+    <script type="text/javascript" src="../js/lib/vendor/highlighter.js"></script>
 
-        <!-- SOURCE: ######################################### -->
-        <!-- jquery plugins -->
-        <script type="text/javascript" src="../js/lib/jquery_plugins/jquery.get_locator.js"></script>
-        <script type="text/javascript" src="../js/lib/jquery_plugins/jquery.get_selector.js"></script>
+    <!-- SOURCE: ######################################### -->
+    <!-- jquery plugins -->
+    <script type="text/javascript" src="../js/lib/jquery_plugins/jquery.get_locator.js"></script>
+    <script type="text/javascript" src="../js/lib/jquery_plugins/jquery.get_selector.js"></script>
 
-        <!-- recorders -->
-        <script type="text/javascript" src="../js/lib/capybara/recorders/actions.js"></script>
-        <script type="text/javascript" src="../js/lib/capybara/recorders/matchers.js"></script>
+    <!-- recorders -->
+    <script type="text/javascript" src="../js/lib/capybara/recorders/actions.js"></script>
+    <script type="text/javascript" src="../js/lib/capybara/recorders/matchers.js"></script>
 
-        <!-- generators -->
-        <script type="text/javascript" src="../js/lib/capybara/generators/action.js"></script>
-        <script type="text/javascript" src="../js/lib/capybara/generators/matcher.js"></script>
+    <!-- generators -->
+    <script type="text/javascript" src="../js/lib/capybara/generators/action.js"></script>
+    <script type="text/javascript" src="../js/lib/capybara/generators/matcher.js"></script>
 
-        <!-- spec -->
-        <script type="text/javascript" src="../js/lib/capybara/specs.js"></script>
+    <!-- spec -->
+    <script type="text/javascript" src="../js/lib/capybara/specs.js"></script>
 
-        <!-- scripts -->
-        <script type="text/javascript" src="../js/lib/tab_process.js"></script>
-        <script type="text/javascript" src="../js/background.js"></script>
-        <script type="text/javascript" src="../js/recorder.js"></script>
-        <script type="text/javascript" src="../js/recorder_ui.js"></script>
-
-
-        <!-- SPECS: ########################################## -->
-        <script type="text/javascript" src="../spec/lib/jquery_plugins/jquery.get_locator_spec.js"></script>
-        <script type="text/javascript" src="../spec/lib/jquery_plugins/jquery.get_selector_spec.js"></script>
-
-        <!-- recorders -->
-        <script type="text/javascript" src="../spec/lib/capybara/recorders/actions_spec.js"></script>
-        <script type="text/javascript" src="../spec/lib/capybara/recorders/matchers_spec.js"></script>
-
-        <!-- generators -->
-        <script type="text/javascript" src="../spec/lib/capybara/generators/action_spec.js"></script>
-        <script type="text/javascript" src="../spec/lib/capybara/generators/matcher_spec.js"></script>
-
-        <!-- spec -->
-        <script type="text/javascript" src="../spec/lib/capybara/specs_spec.js"></script>
-
-        <!-- scripts -->
-        <script type="text/javascript" src="../spec/lib/tab_process_spec.js"></script>
-        <script type="text/javascript" src="../spec/background_spec.js"></script>
-        <script type="text/javascript" src="../spec/recorder_spec.js"></script>
-        <script type="text/javascript" src="../spec/recorder_ui_spec.js"></script>
+    <!-- scripts -->
+    <script type="text/javascript" src="../js/lib/tab_process.js"></script>
+    <script type="text/javascript" src="../js/background.js"></script>
+    <script type="text/javascript" src="../js/recorder.js"></script>
+    <script type="text/javascript" src="../js/recorder_ui.js"></script>
 
 
+    <!-- SPECS: ########################################## -->
+    <script type="text/javascript" src="../spec/lib/jquery_plugins/jquery.get_locator_spec.js"></script>
+    <script type="text/javascript" src="../spec/lib/jquery_plugins/jquery.get_selector_spec.js"></script>
 
+    <!-- recorders -->
+    <script type="text/javascript" src="../spec/lib/capybara/recorders/actions_spec.js"></script>
+    <script type="text/javascript" src="../spec/lib/capybara/recorders/matchers_spec.js"></script>
 
-    </head>
-    <body>
+    <!-- generators -->
+    <script type="text/javascript" src="../spec/lib/capybara/generators/action_spec.js"></script>
+    <script type="text/javascript" src="../spec/lib/capybara/generators/matcher_spec.js"></script>
 
-        <script type="text/javascript">
-            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-            jasmine.getEnv().execute();
-        </script>
+    <!-- spec -->
+    <script type="text/javascript" src="../spec/lib/capybara/specs_spec.js"></script>
 
-    </body>
+    <!-- scripts -->
+    <script type="text/javascript" src="../spec/lib/tab_process_spec.js"></script>
+    <script type="text/javascript" src="../spec/background_spec.js"></script>
+    <script type="text/javascript" src="../spec/recorder_spec.js"></script>
+    <script type="text/javascript" src="../spec/recorder_ui_spec.js"></script>
+
+  </head>
+  <body>
+    <script type="text/javascript">
+      (function() {
+        var jasmineEnv = jasmine.getEnv();
+        jasmineEnv.updateInterval = 1000;
+
+        var htmlReporter = new jasmine.HtmlReporter();
+
+        jasmineEnv.addReporter(htmlReporter);
+
+        jasmineEnv.specFilter = function(spec) {
+          return htmlReporter.specFilter(spec);
+        };
+
+        var currentWindowOnload = window.onload;
+
+        window.onload = function() {
+          if (currentWindowOnload) {
+            currentWindowOnload();
+          }
+          execJasmine();
+        };
+
+        function execJasmine() {
+          jasmineEnv.execute();
+        }
+
+      })();
+    </script>
+
+  </body>
 </html>
