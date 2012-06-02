@@ -37,21 +37,47 @@ describe 'Capybara action generator', ->
 
     describe '#toString', ->
 
-      expectations =
-        'attachFile'  : "attach_file('Foo', 'foo/bar.png')"
-        'check'       : "check('Foo')"
-        'uncheck'     : "uncheck('Foo')"
-        'choose'      : "choose('Foo')"
-        'click_button': "click_button('Foo')"
-        'fillIn'      : "fill_in('Foo', :with => 'foobar')"
-        'select'      : "select('Foo', :from => 'foo')"
-        'clickLink'   : "click_link('Foo')"
-        'visitPath'   : "visit('/foo/bar')"
+      it 'should return correct template for attachFile', ->
+        options = _.extend(allOptions, name: 'attachFile')
+        generator = new Capybara.Generators.Action(options)
+        expect(generator.toString()).toBe("attach_file('Foo', 'foo/bar.png')")
 
-      for method, template of expectations
+      it 'should return correct template for check', ->
+        options = _.extend(allOptions, name: 'check')
+        generator = new Capybara.Generators.Action(options)
+        expect(generator.toString()).toBe("check('Foo')")
 
-        it "should return correct template for #{method}", ->
-          options = _.extend(allOptions, name: method)
-          generator = new Capybara.Generators.Action(options)
+      it 'should return correct template for uncheck', ->
+        options = _.extend(allOptions, name: 'uncheck')
+        generator = new Capybara.Generators.Action(options)
+        expect(generator.toString()).toBe("uncheck('Foo')")
 
-          expect(generator.toString()).toBe(template)
+      it 'should return correct template for choose', ->
+        options = _.extend(allOptions, name: 'choose')
+        generator = new Capybara.Generators.Action(options)
+        expect(generator.toString()).toBe("choose('Foo')")
+
+      it 'should return correct template for clickButton', ->
+        options = _.extend(allOptions, name: 'clickButton')
+        generator = new Capybara.Generators.Action(options)
+        expect(generator.toString()).toBe("click_button('Foo')")
+
+      it 'should return correct template for fillIn', ->
+        options = _.extend(allOptions, name: 'fillIn')
+        generator = new Capybara.Generators.Action(options)
+        expect(generator.toString()).toBe("fill_in('Foo', :with => 'foobar')")
+
+      it 'should return correct template for select', ->
+        options = _.extend(allOptions, name: 'select')
+        generator = new Capybara.Generators.Action(options)
+        expect(generator.toString()).toBe("select('Foo', :from => 'foo')")
+
+      it 'should return correct template for clickLink', ->
+        options = _.extend(allOptions, name: 'clickLink')
+        generator = new Capybara.Generators.Action(options)
+        expect(generator.toString()).toBe("click_link('Foo')")
+
+      it 'should return correct template for visitPath', ->
+        options = _.extend(allOptions, name: 'visitPath')
+        generator = new Capybara.Generators.Action(options)
+        expect(generator.toString()).toBe("visit('/foo/bar')")

@@ -45,31 +45,78 @@
         });
       });
       return describe('#toString', function() {
-        var expectations, method, template, _results;
-        expectations = {
-          'attachFile': "attach_file('Foo', 'foo/bar.png')",
-          'check': "check('Foo')",
-          'uncheck': "uncheck('Foo')",
-          'choose': "choose('Foo')",
-          'click_button': "click_button('Foo')",
-          'fillIn': "fill_in('Foo', :with => 'foobar')",
-          'select': "select('Foo', :from => 'foo')",
-          'clickLink': "click_link('Foo')",
-          'visitPath': "visit('/foo/bar')"
-        };
-        _results = [];
-        for (method in expectations) {
-          template = expectations[method];
-          _results.push(it("should return correct template for " + method, function() {
-            var options;
-            options = _.extend(allOptions, {
-              name: method
-            });
-            generator = new Capybara.Generators.Action(options);
-            return expect(generator.toString()).toBe(template);
-          }));
-        }
-        return _results;
+        it('should return correct template for attachFile', function() {
+          var options;
+          options = _.extend(allOptions, {
+            name: 'attachFile'
+          });
+          generator = new Capybara.Generators.Action(options);
+          return expect(generator.toString()).toBe("attach_file('Foo', 'foo/bar.png')");
+        });
+        it('should return correct template for check', function() {
+          var options;
+          options = _.extend(allOptions, {
+            name: 'check'
+          });
+          generator = new Capybara.Generators.Action(options);
+          return expect(generator.toString()).toBe("check('Foo')");
+        });
+        it('should return correct template for uncheck', function() {
+          var options;
+          options = _.extend(allOptions, {
+            name: 'uncheck'
+          });
+          generator = new Capybara.Generators.Action(options);
+          return expect(generator.toString()).toBe("uncheck('Foo')");
+        });
+        it('should return correct template for choose', function() {
+          var options;
+          options = _.extend(allOptions, {
+            name: 'choose'
+          });
+          generator = new Capybara.Generators.Action(options);
+          return expect(generator.toString()).toBe("choose('Foo')");
+        });
+        it('should return correct template for clickButton', function() {
+          var options;
+          options = _.extend(allOptions, {
+            name: 'clickButton'
+          });
+          generator = new Capybara.Generators.Action(options);
+          return expect(generator.toString()).toBe("click_button('Foo')");
+        });
+        it('should return correct template for fillIn', function() {
+          var options;
+          options = _.extend(allOptions, {
+            name: 'fillIn'
+          });
+          generator = new Capybara.Generators.Action(options);
+          return expect(generator.toString()).toBe("fill_in('Foo', :with => 'foobar')");
+        });
+        it('should return correct template for select', function() {
+          var options;
+          options = _.extend(allOptions, {
+            name: 'select'
+          });
+          generator = new Capybara.Generators.Action(options);
+          return expect(generator.toString()).toBe("select('Foo', :from => 'foo')");
+        });
+        it('should return correct template for clickLink', function() {
+          var options;
+          options = _.extend(allOptions, {
+            name: 'clickLink'
+          });
+          generator = new Capybara.Generators.Action(options);
+          return expect(generator.toString()).toBe("click_link('Foo')");
+        });
+        return it('should return correct template for visitPath', function() {
+          var options;
+          options = _.extend(allOptions, {
+            name: 'visitPath'
+          });
+          generator = new Capybara.Generators.Action(options);
+          return expect(generator.toString()).toBe("visit('/foo/bar')");
+        });
       });
     });
   });
