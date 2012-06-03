@@ -53,6 +53,10 @@ class Build < Thor::Group
     copy_file file, File.join(destination, file)
   end
 
+  def packaging
+    run 'zip build.zip build'
+  end
+
 private
 
   def copy(list)
