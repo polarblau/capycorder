@@ -31,7 +31,6 @@ methods =
     else
       null
 
-
 helpers =
 
   findLabelForInput: ($input) ->

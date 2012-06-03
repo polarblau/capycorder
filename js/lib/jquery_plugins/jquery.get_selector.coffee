@@ -32,8 +32,14 @@ $.fn.getSelector = (path = '') ->
   if !selector.length
     selector = tagName
 
-  if @index() > 0
+  if $(selector + path).length == 1
+    return selector + path
+
+  if @index() > 0 && $(selector + path).length > 1
     selector += ":nth-child(#{@index()})"
+
+  if $(selector + path).length == 1
+    return selector + path
 
   # still here? let's climb one up
   return @parent().getSelector(' > ' + selector + path)

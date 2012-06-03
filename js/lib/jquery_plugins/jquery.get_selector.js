@@ -39,8 +39,14 @@ Extended by Florian Plank, Polarblau (2012)
     if (!selector.length) {
       selector = tagName;
     }
-    if (this.index() > 0) {
+    if ($(selector + path).length === 1) {
+      return selector + path;
+    }
+    if (this.index() > 0 && $(selector + path).length > 1) {
       selector += ":nth-child(" + (this.index()) + ")";
+    }
+    if ($(selector + path).length === 1) {
+      return selector + path;
     }
     return this.parent().getSelector(' > ' + selector + path);
   };
