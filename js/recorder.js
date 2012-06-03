@@ -4,7 +4,11 @@
 
   init = function() {
     var recorder, ui, _ref;
-    _ref = [new RecorderUI, null], ui = _ref[0], recorder = _ref[1];
+    _ref = [
+      new RecorderUI({
+        chrome: chrome
+      }), null
+    ], ui = _ref[0], recorder = _ref[1];
     chrome.extension.sendRequest({
       name: 'loaded'
     });

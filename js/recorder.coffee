@@ -1,6 +1,6 @@
 init = ->
   # these need to be available across state changes
-  [ui, recorder] = [new RecorderUI, null]
+  [ui, recorder] = [new RecorderUI(chrome: chrome), null]
 
   # tell the background that the tab has been loaded
   chrome.extension.sendRequest name: 'loaded'

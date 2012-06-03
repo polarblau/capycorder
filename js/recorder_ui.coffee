@@ -5,12 +5,12 @@ class RecorderUI
   delayToHide: 5
   hideAfter: null
 
-  template:
+  getTemplate: ->
     """
       <div id="capycorder">
         <div class="prompt-name">
           <div class="capycorder-label">
-            <img src="#{chrome.extension.getURL('images/button_off.png')}" />
+            <img src="#{@chrome.extension.getURL('images/button_off.png')}" />
             Name your test. It
           </div>
           <div class="capycorder-input-wrapper">
@@ -23,29 +23,32 @@ class RecorderUI
         </div>
         <div class="capture-actions">
           <div>
-            <img src="#{chrome.extension.getURL('images/button_capture_actions.png')}" />
+            <img src="#{@chrome.extension.getURL('images/button_capture_actions.png')}" />
             Interact with the page to record actions.
           </div>
         </div>
         <div class="capture-matchers">
           <div>
-            <img src="#{chrome.extension.getURL('images/button_capture_matchers.png')}" />
+            <img src="#{@chrome.extension.getURL('images/button_capture_matchers.png')}" />
             Select text ranges or elements to record matchers.
           </div>
        </div>
         <div class="generate">
           <div>
-            <img src="#{chrome.extension.getURL('images/button_generate.png')}" />
+            <img src="#{@chrome.extension.getURL('images/button_generate.png')}" />
             Thanks! The recorded spec has been copied to the clipboard.
           </div>
         </div>
       </div>
     """
 
+  constructor: (options) ->
+    @chrome = options.chrome
+
   _created: false
   create: ->
     unless @_created
-      @$ui = $(@template)
+      @$ui = $(@getTemplate())
       @$ui.appendTo('body:first').find('> div').hide()
       @_created = true
 

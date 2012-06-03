@@ -7,24 +7,26 @@
 
     RecorderUI.name = 'RecorderUI';
 
-    function RecorderUI() {
-      this._hideVisible = __bind(this._hideVisible, this);
-
-    }
-
     RecorderUI.prototype.$ui = null;
 
     RecorderUI.prototype.delayToHide = 5;
 
     RecorderUI.prototype.hideAfter = null;
 
-    RecorderUI.prototype.template = "<div id=\"capycorder\">\n  <div class=\"prompt-name\">\n    <div class=\"capycorder-label\">\n      <img src=\"" + (chrome.extension.getURL('images/button_off.png')) + "\" />\n      Name your test. It\n    </div>\n    <div class=\"capycorder-input-wrapper\">\n      <input type=\"text\" id=\"capycorder-spec-name\" placeholder=\"should do something\" />\n    </div>\n    <div class=\"capycorder-actions\">\n      <a href=\"#\" class=\"cancel\">Cancel</a>\n      <button>OK</button>\n    </div>\n  </div>\n  <div class=\"capture-actions\">\n    <div>\n      <img src=\"" + (chrome.extension.getURL('images/button_capture_actions.png')) + "\" />\n      Interact with the page to record actions.\n    </div>\n  </div>\n  <div class=\"capture-matchers\">\n    <div>\n      <img src=\"" + (chrome.extension.getURL('images/button_capture_matchers.png')) + "\" />\n      Select text ranges or elements to record matchers.\n    </div>\n </div>\n  <div class=\"generate\">\n    <div>\n      <img src=\"" + (chrome.extension.getURL('images/button_generate.png')) + "\" />\n      Thanks! The recorded spec has been copied to the clipboard.\n    </div>\n  </div>\n</div>";
+    RecorderUI.prototype.getTemplate = function() {
+      return "<div id=\"capycorder\">\n  <div class=\"prompt-name\">\n    <div class=\"capycorder-label\">\n      <img src=\"" + (this.chrome.extension.getURL('images/button_off.png')) + "\" />\n      Name your test. It\n    </div>\n    <div class=\"capycorder-input-wrapper\">\n      <input type=\"text\" id=\"capycorder-spec-name\" placeholder=\"should do something\" />\n    </div>\n    <div class=\"capycorder-actions\">\n      <a href=\"#\" class=\"cancel\">Cancel</a>\n      <button>OK</button>\n    </div>\n  </div>\n  <div class=\"capture-actions\">\n    <div>\n      <img src=\"" + (this.chrome.extension.getURL('images/button_capture_actions.png')) + "\" />\n      Interact with the page to record actions.\n    </div>\n  </div>\n  <div class=\"capture-matchers\">\n    <div>\n      <img src=\"" + (this.chrome.extension.getURL('images/button_capture_matchers.png')) + "\" />\n      Select text ranges or elements to record matchers.\n    </div>\n </div>\n  <div class=\"generate\">\n    <div>\n      <img src=\"" + (this.chrome.extension.getURL('images/button_generate.png')) + "\" />\n      Thanks! The recorded spec has been copied to the clipboard.\n    </div>\n  </div>\n</div>";
+    };
+
+    function RecorderUI(options) {
+      this._hideVisible = __bind(this._hideVisible, this);
+      this.chrome = options.chrome;
+    }
 
     RecorderUI.prototype._created = false;
 
     RecorderUI.prototype.create = function() {
       if (!this._created) {
-        this.$ui = $(this.template);
+        this.$ui = $(this.getTemplate());
         this.$ui.appendTo('body:first').find('> div').hide();
         return this._created = true;
       }
