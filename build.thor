@@ -54,7 +54,7 @@ class Build < Thor::Group
   end
 
   def packaging
-    run 'zip build.zip build'
+    run 'zip -r build.zip build'
   end
 
 private
