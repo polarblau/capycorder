@@ -5,7 +5,7 @@
 .config
 .crx
 .pem
-.zip
+*.zip
 coverage
 InstalledFiles
 lib/bundler/man
