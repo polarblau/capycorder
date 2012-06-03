@@ -1,4 +1,4 @@
-jasmine.getFixtures().fixturesPath = 'fixtures/capybara/recorders'
+jasmine.getFixtures().fixturesPath = 'fixtures'
 
 describe 'Capybara actions recorder', ->
 
@@ -6,7 +6,7 @@ describe 'Capybara actions recorder', ->
   callback = null
 
   beforeEach ->
-    loadFixtures('actions_spec.html')
+    loadFixtures('capybara/recorders/actions_spec.html')
     callback = jasmine.createSpy('afterCaptureCallback')
     recorder = new Capybara.Recorders.Actions afterCapture: callback
     recorder.start()

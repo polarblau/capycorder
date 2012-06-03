@@ -1,4 +1,4 @@
-jasmine.getFixtures().fixturesPath = 'fixtures/capybara/recorders'
+jasmine.getFixtures().fixturesPath = 'fixtures'
 
 describe 'Capybara matchers recorder', ->
 
@@ -7,7 +7,7 @@ describe 'Capybara matchers recorder', ->
   fakeWindow = null
 
   beforeEach ->
-    loadFixtures('matchers_spec.html')
+    loadFixtures('capybara/recorders/matchers_spec.html')
     callback = jasmine.createSpy('afterCaptureCallback')
     recorder = new Capybara.Recorders.Matchers afterCapture: callback
     recorder.start()
@@ -19,7 +19,7 @@ describe 'Capybara matchers recorder', ->
       expect(callback).toHaveBeenCalledWith
         type    : 'matcher'
         name    : 'shouldHaveSelector'
-        selector: 'html > body > div#jasmine-fixtures > div#div'
+        selector: '#div'
         scope   : null
         options : {}
 
