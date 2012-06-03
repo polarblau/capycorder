@@ -27,6 +27,13 @@
       "js/recorder.js"
     ]
   }],
+  "web_accessible_resources": [
+    "images/button_off.png",
+    "images/button_name.png",
+    "images/button_generate.png",
+    "images/button_capture_actions.png",
+    "images/button_capture_matchers.png"
+  ],
   "browser_action": {
     "default_icon": "images/button_off.png",
     "default_title": "Record a new session"

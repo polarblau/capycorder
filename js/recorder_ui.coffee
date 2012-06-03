@@ -10,49 +10,54 @@ class RecorderUI
       <div id="capycorder">
         <div class="prompt-name">
           <div class="capycorder-label">
-            <strong>
-              <img src="#{chrome.extension.getURL('images/button_off.png')}" />
-            </strong>
+            <img src="#{chrome.extension.getURL('images/button_off.png')}" />
             Name your test. It
           </div>
           <div class="capycorder-input-wrapper">
             <input type="text" id="capycorder-spec-name" placeholder="should do something" />
           </div>
           <div class="capycorder-actions">
-            <button>Okay</button>
             <a href="#" class="cancel">Cancel</a>
+            <button>OK</button>
           </div>
         </div>
         <div class="capture-actions">
-          <strong>Capycorder</strong>
-          Interact with the page to record actions.
+          <div>
+            <img src="#{chrome.extension.getURL('images/button_capture_actions.png')}" />
+            Interact with the page to record actions.
+          </div>
         </div>
         <div class="capture-matchers">
-          <strong>Capycorder</strong>
-          Select text ranges or elements to record matchers.
-        </div>
+          <div>
+            <img src="#{chrome.extension.getURL('images/button_capture_matchers.png')}" />
+            Select text ranges or elements to record matchers.
+          </div>
+       </div>
         <div class="generate">
-          <strong>Capycorder</strong>
-          Thanks! The recorded spec has been copied to the clipboard.
+          <div>
+            <img src="#{chrome.extension.getURL('images/button_generate.png')}" />
+            Thanks! The recorded spec has been copied to the clipboard.
+          </div>
         </div>
       </div>
     """
 
-  constructor: ->
-    @create()
-
+  _created: false
   create: ->
-    @$ui = $(@template)
-    @$ui.appendTo('body:first').find('> div').hide()
+    unless @_created
+      @$ui = $(@template)
+      @$ui.appendTo('body:first').find('> div').hide()
+      @_created = true
 
   showNamePrompt: (block = ->) ->
+    @create()
     @_hideVisible =>
       $visible = @$ui.find('.prompt-name').show()
-      @_showUI()
+      @_showUI =>
+        @$ui.find('.prompt-name input').trigger('focus')
       $visible
         .find('input')
         .val('')
-        .focus()
         .end()
         .find('a')
         .one 'click', =>

@@ -1,61 +1,110 @@
 #capycorder {
-  position: fixed;
-  right: 5px;
-  left: 5px;
-  top: -200px;
-  z-index: 99998;
-  background: rgba(0, 0, 0, 0.8) !important;
-  font-size: 14px !important;
-  font-family: Helvetica, Arial, sans-serif !important;
-  color: #fff !important;
-  border-radius: 0 0 3px 3px !important;
-  text-align: left;
-  -webkit-box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4) !important;
+    width: 100% !important;
+    position: fixed !important;
+    display: table !important;
+    left: 0 !important;
+    z-index: 99998 !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    font-size: 14px !important;
+    font-family: Helvetica, Arial, sans-serif !important;
+    color: #fff !important;
+    text-align: left !important;
+    text-shadow: 0px -1px 1px #000000;
+    -webkit-box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4) !important;
 }
 
 #capycorder > div {
-  margin: 10px !important;
+    display: table-row;
 }
 
-#capycorder button {
-  padding: auto !important;
-  margin: auto !important;
+#capycorder > div > div img {
+    vertical-align: middle !important;
+    margin: -5px 5px 0 0;
 }
 
-#capycorder a {
-  color: #b9030f !important;
-  text-decoration: none !important;
-  border-bottom: 1px dotted #b9030f !important;
+#capycorder > .prompt-name > .capycorder-label,
+#capycorder > .prompt-name > .capycorder-input-wrapper,
+#capycorder > .prompt-name > .capycorder-actions{
+    display: table-cell !important;
+    width: auto !important;
+    position: relative !important;
 }
 
-#capycorder a:hover {
-  color: #ff0011 !important;
-  border: none !important;
+#capycorder > .prompt-name > .capycorder-label,
+#capycorder > .prompt-name > .capycorder-actions {
+    width: 5px !important;
+    padding: 5px !important;
+    white-space: nowrap !important;
 }
 
-#capycorder > .prompt-name {
-  z-index 99999 !important;
-  display: table;
+#capycorder > .prompt-name > .capycorder-label {
+    font-weight: bold !important;
 }
 
-#capycorder > .prompt-name >
-
-#capycorder > .prompt-name > .capycorder-input-wrapper {
-  display: inline-block !important;
-  position: relative !important;
-  margin: 0 -2px -3px -2px !important;
-  padding: 0 0 3px 0 !important;
-  border-bottom: 1px dotted #fff !important;
+#capycorder > .prompt-name > .capycorder-input-wrapper input {
+    width: 100%; !important;
+    font-family: Monaco, Courier, mono-space !important;
+    color: #727272 !important;
+    font-size: 14px !important;
+    background: none !important;
+    border: none !important;
+    outline: none !important;
+    border-bottom: 1px dotted #727272 !important;
 }
 
-#capycorder > .prompt-name > .capycorder-input-wrapper > #capycorder-spec-name {
-  font-size: 14px !important;
-  position: absolute;
-  left: 0;
-  right: 0;
-  font-family: Monaco, Courier, monospace !important;
-  color: #fff !important;
-  background: transparent !important;
-  border: none !important;
-  outline: none !important;
+#capycorder > .prompt-name > .capycorder-input-wrapper input::-webkit-input-placeholder {
+    color: #727272 !important;
 }
+
+#capycorder > .prompt-name > .capycorder-input-wrapper input:focus {
+    color: #e5bf1e !important;
+}
+
+#capycorder > .prompt-name > .capycorder-actions > a.cancel {
+    color: #e5bf1e !important;
+    font-size: 11px !important;
+    text-decoration: none !important;
+    margin-left: 15px !important;
+    border-bottom: 1px solid #e5bf1e !important;
+}
+
+#capycorder > .prompt-name > .capycorder-actions > button {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #fade4f), color-stop(1, #e4be14)) !important;
+    background-color: #fade4f !important;
+    border-radius: 3px !important;
+    border: 1px solid #50430b !important;
+    display: inline-block !important;
+    color: #000000 !important;
+    font-size: 11px !important;
+    font-weight: bold !important;
+    padding: 3px 15px !important;
+    text-decoration: none !important;
+    text-shadow:0px 1px 0px #fcefa8 !important;
+}.
+
+#capycorder > .prompt-name > .capycorder-actions > button:hover {
+    background: #fade4f !important;
+}
+
+#capycorder > .prompt-name > .capycorder-actions > button:active {
+    position: relative !important;
+    top: 1px !important;
+    background: #e4be14 !important;
+}
+
+#capycorder > .capture-actions,
+#capycorder > .capture-matchers,
+#capycorder > .generate {
+  padding: 5px !important;
+}
+
+#capycorder > .capture-actions > div,
+#capycorder > .capture-matchers > div,
+#capycorder > .generate > div {
+    display: table-cell !important;
+    width: auto !important;
+    position: relative !important;
+    padding: 9px !important;
+    white-space: nowrap !important;
+}
+
