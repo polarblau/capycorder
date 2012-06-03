@@ -1,6 +1,7 @@
 require "rubygems"
 require "thor"
 require "json"
+require "nokogiri"
 
 class Build < Thor::Group
   include Thor::Actions
@@ -29,6 +30,23 @@ class Build < Thor::Group
 
   def copy_web_accessible_resources
     copy manifest['web_accessible_resources']
+  end
+
+  def copy_background_page
+    copy manifest['background']
+  end
+
+  def copy_background_scripts
+    doc = Nokogiri::HTML(File.open('background.html'))
+    doc.css('head script').each do |script|
+      file = script.attribute('src')
+      copy_file file, File.join(destination, file)
+    end
+  end
+
+  def copy_manifest
+    file = 'manifest.json'
+    copy_file file, File.join(destination, file)
   end
 
 private
