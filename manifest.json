@@ -1,6 +1,6 @@
 {
   "name": "Capycorder",
-  "version": "1.0",
+  "version": "1.0.0beta",
   "manifest_version": 2,
   "description": "Record user interactions for use in Capybara request specs.",
   "icons": {
