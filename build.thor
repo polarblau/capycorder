@@ -12,6 +12,10 @@ class Build < Thor::Group
     File.dirname(__FILE__)
   end
 
+  def convert_coffee_files
+    run 'coffee -c .'
+  end
+
   def prepare_dir
     remove_dir destination
     empty_directory destination
