@@ -15,16 +15,12 @@ class TabProcess
   getState: ->
     @state
 
-  getInfo: ->
-    state: @getState()
-    isNamed: @specs.name?
-
   setState: (state) ->
     @state = state
     @stateChangeCallback @state
 
   toNextState: ->
-    state = STATES[_.indexOf(STATES, @state) + 1] || _.first(STATES)
+    state = STATES[_.indexOf(STATES, @state) + 1] || _.first(STATES)
     @setState state
 
 

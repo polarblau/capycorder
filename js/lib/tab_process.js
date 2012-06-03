@@ -25,13 +25,6 @@
       return this.state;
     };
 
-    TabProcess.prototype.getInfo = function() {
-      return {
-        state: this.getState(),
-        isNamed: this.specs.name != null
-      };
-    };
-
     TabProcess.prototype.setState = function(state) {
       this.state = state;
       return this.stateChangeCallback(this.state);
@@ -39,7 +32,7 @@
 
     TabProcess.prototype.toNextState = function() {
       var state;
-      state = STATES[_.indexOf(STATES, this.state) + 1] ||  _.first(STATES);
+      state = STATES[_.indexOf(STATES, this.state) + 1] || _.first(STATES);
       return this.setState(state);
     };
 
