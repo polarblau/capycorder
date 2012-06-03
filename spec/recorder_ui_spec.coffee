@@ -27,17 +27,17 @@ describe 'RecoderUI', ->
     beforeEach ->
       ui.create()
 
-    it 'should make the .capture-actions visible', ->
+    it 'should make .capture-actions visible', ->
       expect($('body #capycorder .capture-actions')).not.toBeVisible()
       ui.show('capture.actions')
       expect($('body #capycorder .capture-actions')).toBeVisible()
 
-    it 'should make the .capture-matchers visible', ->
+    it 'should make .capture-matchers visible', ->
       expect($('body #capycorder .capture-matchers')).not.toBeVisible()
       ui.show('capture.matchers')
       expect($('body #capycorder .capture-matchers')).toBeVisible()
 
-    it 'should make the .generate visible', ->
+    it 'should make .generate visible', ->
       expect($('body #capycorder .generate')).not.toBeVisible()
       ui.show('generate')
       expect($('body #capycorder .generate')).toBeVisible()

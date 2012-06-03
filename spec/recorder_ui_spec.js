@@ -35,17 +35,17 @@
       beforeEach(function() {
         return ui.create();
       });
-      it('should make the .capture-actions visible', function() {
+      it('should make .capture-actions visible', function() {
         expect($('body #capycorder .capture-actions')).not.toBeVisible();
         ui.show('capture.actions');
         return expect($('body #capycorder .capture-actions')).toBeVisible();
       });
-      it('should make the .capture-matchers visible', function() {
+      it('should make .capture-matchers visible', function() {
         expect($('body #capycorder .capture-matchers')).not.toBeVisible();
         ui.show('capture.matchers');
         return expect($('body #capycorder .capture-matchers')).toBeVisible();
       });
-      return it('should make the .generate visible', function() {
+      return it('should make .generate visible', function() {
         expect($('body #capycorder .generate')).not.toBeVisible();
         ui.show('generate');
         return expect($('body #capycorder .generate')).toBeVisible();
