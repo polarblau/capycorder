@@ -18,7 +18,7 @@ $.fn.getSelector = (path = '') ->
   selector = "##{id}" if id?
 
   # the id should be enough if the document is valid
-  if $(selector).length == 1
+  if $(selector + path).length == 1
     return selector + path
 
   # all classes

@@ -27,7 +27,7 @@ Extended by Florian Plank, Polarblau (2012)
     if (id != null) {
       selector = "#" + id;
     }
-    if ($(selector).length === 1) {
+    if ($(selector + path).length === 1) {
       return selector + path;
     }
     if (klass != null) {
