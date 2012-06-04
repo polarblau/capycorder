@@ -64,7 +64,7 @@ create a .zip packe read to use.
 
 ```bash
 thor build [DESTINATION]
-``
+```
 
 You can install the ruby dependencies using bundler.
 
