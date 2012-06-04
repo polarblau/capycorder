@@ -60,7 +60,7 @@ By all means, any help is highly appreciated.
 The included build script will copy all files listed in the manifest
 (incl. dependencies) to `/build` by default or any other DESTINATION
 defined. It will also first compile all coffescript files and finally
-create a .zip packe read to use.
+create a .zip package ready to use.
 
 ```bash
 thor build [DESTINATION]
