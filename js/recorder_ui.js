@@ -50,6 +50,10 @@
           name = $visible.find('#capycorder-spec-name').val();
           _this._hideVisible();
           return block(name);
+        }).end().find('#capycorder-spec-name').keypress(function(event) {
+          if (event.which === 13) {
+            return $visible.find('button').click();
+          }
         });
       });
     };
