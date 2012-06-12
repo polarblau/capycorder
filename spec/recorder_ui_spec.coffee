@@ -14,18 +14,13 @@ describe 'RecoderUI', ->
   describe '#create', ->
 
     it 'should generate the necessary HTML and append it', ->
-      expect($('body #capycorder')).not.toExist()
-      ui.create()
       expect($('body #capycorder')).toExist()
 
     it 'should only generate the HTML once', ->
       ui.create()
-      ui.create()
       expect($('body #capycorder').length).toEqual(1)
 
   describe '#show', ->
-    beforeEach ->
-      ui.create()
 
     it 'should make .capture-actions visible', ->
       expect($('body #capycorder .capture-actions')).not.toBeVisible()

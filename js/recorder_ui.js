@@ -18,6 +18,7 @@
     function RecorderUI(options) {
       this._hideVisible = __bind(this._hideVisible, this);
       this.chrome = options.chrome;
+      this.create();
     }
 
     RecorderUI.prototype._created = false;
@@ -35,7 +36,6 @@
       if (block == null) {
         block = function() {};
       }
-      this.create();
       return this._hideVisible(function() {
         var $visible;
         $visible = _this.$ui.find('.prompt-name').show();

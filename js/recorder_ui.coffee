@@ -44,6 +44,7 @@ class RecorderUI
 
   constructor: (options) ->
     @chrome = options.chrome
+    @create()
 
   _created: false
   create: ->
@@ -53,7 +54,6 @@ class RecorderUI
       @_created = true
 
   showNamePrompt: (block = ->) ->
-    @create()
     @_hideVisible =>
       $visible = @$ui.find('.prompt-name').show()
       @_showUI =>
