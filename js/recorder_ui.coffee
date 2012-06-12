@@ -48,9 +48,10 @@ class RecorderUI
   _created: false
   create: ->
     unless @_created
-      @$ui = $(@getTemplate())
-      @$ui.appendTo('body:first').find('> div').hide()
-      @_created = true
+      if window.top == window.self
+        @$ui = $(@getTemplate())
+        @$ui.appendTo('body').find('> div').hide()
+        @_created = true
 
   showNamePrompt: (block = ->) ->
     @create()

@@ -24,9 +24,11 @@
 
     RecorderUI.prototype.create = function() {
       if (!this._created) {
-        this.$ui = $(this.getTemplate());
-        this.$ui.appendTo('body:first').find('> div').hide();
-        return this._created = true;
+        if (window.top === window.self) {
+          this.$ui = $(this.getTemplate());
+          this.$ui.appendTo('body').find('> div').hide();
+          return this._created = true;
+        }
       }
     };
 
