@@ -61,6 +61,8 @@ class RecorderUI
       $visible
         .find('input')
         .val('')
+        .keypress (event) ->
+          $visible.find('button').click() if event.which == 13
         .end()
         .find('a')
         .one 'click', =>
@@ -72,9 +74,6 @@ class RecorderUI
           name = $visible.find('#capycorder-spec-name').val()
           @_hideVisible()
           block(name)
-        .end()
-        .find('#capycorder-spec-name').keypress (event) ->
-          $visible.find('button').click() if event.which == 13
 
   show: (state) ->
     @_hideVisible =>
