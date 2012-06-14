@@ -42,7 +42,11 @@
         _this._showUI(function() {
           return _this.$ui.find('.prompt-name input').trigger('focus');
         });
-        return $visible.find('input').val('').end().find('a').one('click', function() {
+        return $visible.find('input').val('').keypress(function(event) {
+          if (event.which === 13) {
+            return $visible.find('button').click();
+          }
+        }).end().find('a').one('click', function() {
           _this._hideVisible();
           return block(null);
         }).end().find('button').one('click', function() {
@@ -50,10 +54,6 @@
           name = $visible.find('#capycorder-spec-name').val();
           _this._hideVisible();
           return block(name);
-        }).end().find('#capycorder-spec-name').keypress(function(event) {
-          if (event.which === 13) {
-            return $visible.find('button').click();
-          }
         });
       });
     };
