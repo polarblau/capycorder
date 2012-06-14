@@ -50,6 +50,8 @@
     border: none !important;
     outline: none !important;
     border-bottom: 1px dotted #727272 !important;
+    border-radius: none !important;
+    padding: 0 !important;
 }
 
 #capycorder > .prompt-name > .capycorder-input-wrapper input::-webkit-input-placeholder {
@@ -80,6 +82,7 @@
     padding: 3px 15px !important;
     text-decoration: none !important;
     text-shadow:0px 1px 0px #fcefa8 !important;
+    line-height: 15px !important;
 }.
 
 #capycorder > .prompt-name > .capycorder-actions > button:hover {
