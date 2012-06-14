@@ -2,8 +2,11 @@
 (function() {
 
   describe('RecoderUI', function() {
-    var CHROME, ui;
+    var CHROME, ENTER_EVENT, ui;
     ui = null;
+    ENTER_EVENT = $.Event('keypress', {
+      'which': 13
+    });
     CHROME = {
       extension: {
         getURL: function(path) {
@@ -51,10 +54,30 @@
         return expect($('body #capycorder .generate')).toBeVisible();
       });
     });
-    return describe('#showNamePrompt', function() {
-      return it('should trigger #create', function() {
+    describe('#showNamePrompt', function() {
+      it('should trigger #create', function() {
         ui.showNamePrompt();
         return expect($('body #capycorder')).toExist();
+      });
+      return it('should show name prompt', function() {
+        ui.showNamePrompt();
+        return expect($('body #capycorder .prompt-name')).toBeVisible();
+      });
+    });
+    return describe('submitting name prompt', function() {
+      beforeEach(function() {
+        return ui.showNamePrompt();
+      });
+      return it('should submit the form when pressing ENTER', function() {
+        expect($('body #capycorder .prompt-name')).toBeVisible();
+        spyOnEvent($('body #capycorder .prompt-name button'), 'click');
+        runs(function() {
+          return $('#capycorder-spec-name').trigger(ENTER_EVENT);
+        });
+        waits(ui.delayToHide * 1000);
+        return runs(function() {
+          return expect($('body #capycorder .prompt-name')).not.toBeVisible();
+        });
       });
     });
   });

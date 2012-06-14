@@ -1,6 +1,7 @@
 describe 'RecoderUI', ->
 
   ui = null
+  ENTER_EVENT = $.Event 'keypress', 'which': 13
   CHROME =
     extension:
       getURL: (path) -> "../#{path}"
@@ -47,4 +48,23 @@ describe 'RecoderUI', ->
     it 'should trigger #create', ->
       ui.showNamePrompt()
       expect($('body #capycorder')).toExist()
+
+    it 'should show name prompt', ->
+      ui.showNamePrompt()
+      expect($('body #capycorder .prompt-name')).toBeVisible()
+
+  describe 'submitting name prompt', ->
+
+    beforeEach ->
+      ui.showNamePrompt()
+
+    it 'should submit the form when pressing ENTER', ->
+      expect($('body #capycorder .prompt-name')).toBeVisible()
+      spyOnEvent($('body #capycorder .prompt-name button'), 'click')
+      runs ->
+        $('#capycorder-spec-name').trigger(ENTER_EVENT)
+      waits(ui.delayToHide * 1000)
+      runs ->
+        expect($('body #capycorder .prompt-name')).not.toBeVisible()
+
 
