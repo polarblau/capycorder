@@ -24,20 +24,14 @@
     });
     describe('#create', function() {
       it('should generate the necessary HTML and append it', function() {
-        expect($('body #capycorder')).not.toExist();
-        ui.create();
         return expect($('body #capycorder')).toExist();
       });
       return it('should only generate the HTML once', function() {
-        ui.create();
         ui.create();
         return expect($('body #capycorder').length).toEqual(1);
       });
     });
     describe('#show', function() {
-      beforeEach(function() {
-        return ui.create();
-      });
       it('should make .capture-actions visible', function() {
         expect($('body #capycorder .capture-actions')).not.toBeVisible();
         ui.show('capture.actions');
