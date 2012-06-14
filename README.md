@@ -1,6 +1,8 @@
 ## CAPYCORDER
 
-Capycorder helps to record user interactions, generates simple Capybara request specs (Rspec) and copies them into the clipboard for usage in specs.
+Capycorder helps to record user interactions, generates simple Capybara
+request specs (Rspec) and copies them into the clipboard for usage in
+specs. Read more over at [polarblau.com](http://polarblau.com/2012/06/04/capycorder-beta-released.html).
 
 ### A word about TDD & BDD
 
@@ -71,6 +73,8 @@ thor build [DESTINATION]
 ```
 
 You can install the ruby dependencies using bundler.
+
+Check the [changelog](https://github.com/polarblau/capycorder/blob/master/CHANGELOG.md) for latest updates.
 
 ### Specs
 
