@@ -55,7 +55,7 @@ By all means, any help is highly appreciated.
 * Create a feature branch
 * Send push request
 
-### Contributers
+### Contributors
 
 * Josef Šimánek ([simi](https://github.com/simi))
 
