@@ -9,7 +9,7 @@ describe 'jquery.get_selector', ->
     expect($('#foo').getSelector()).toEqual('#foo')
 
   it 'should return nth child selector', ->
-    expect($('.same:nth(2)').getSelector()).toEqual('.inner > .same:nth-child(2)')
+    expect($('.same:nth(2)').getSelector()).toEqual('.same:nth-child(2)')
 
   it 'should return nested selector', ->
     expect($('.outer div div div').getSelector()).toEqual('.outer > div > div > div')

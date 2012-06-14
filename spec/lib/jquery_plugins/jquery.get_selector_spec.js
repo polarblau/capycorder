@@ -11,7 +11,7 @@
       return expect($('#foo').getSelector()).toEqual('#foo');
     });
     it('should return nth child selector', function() {
-      return expect($('.same:nth(2)').getSelector()).toEqual('.inner > .same:nth-child(2)');
+      return expect($('.same:nth(2)').getSelector()).toEqual('.same:nth-child(2)');
     });
     return it('should return nested selector', function() {
       return expect($('.outer div div div').getSelector()).toEqual('.outer > div > div > div');
