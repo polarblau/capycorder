@@ -55,6 +55,10 @@ By all means, any help is highly appreciated.
 * Create a feature branch
 * Send push request
 
+### Contributers
+
+* Josef Šimánek ([simi](https://github.com/simi))
+
 ### Build
 
 The included build script will copy all files listed in the manifest
