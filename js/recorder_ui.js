@@ -44,7 +44,8 @@
         });
         return $visible.find('input').val('').keypress(function(event) {
           if (event.which === 13) {
-            return $visible.find('button').click();
+            $(this).trigger('blur');
+            return $visible.find('button').trigger('click');
           }
         }).end().find('a').one('click', function() {
           _this._hideVisible();

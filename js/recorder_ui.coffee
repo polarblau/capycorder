@@ -62,7 +62,9 @@ class RecorderUI
         .find('input')
         .val('')
         .keypress (event) ->
-          $visible.find('button').click() if event.which == 13
+          if event.which == 13
+            $(@).trigger('blur')
+            $visible.find('button').trigger('click')
         .end()
         .find('a')
         .one 'click', =>
