@@ -1,11 +1,19 @@
+#capycorder > * {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 #capycorder {
     width: 100% !important;
     position: fixed !important;
     display: table !important;
     left: 0 !important;
+    top: 0 !important;
+    margin-top: -200px;
     z-index: 99998 !important;
     background: rgba(0, 0, 0, 0.8) !important;
     font-size: 14px !important;
+    line-height: 14px !important;
     font-family: Helvetica, Arial, sans-serif !important;
     color: #fff !important;
     text-align: left !important;
@@ -13,56 +21,60 @@
     -webkit-box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4) !important;
 }
 
-#capycorder > div {
+#capycorder > div,
+#capycorder > form {
     display: table-row;
 }
 
-#capycorder > div > div img {
+#capycorder > div > div img,
+#capycorder > form > div img {
     vertical-align: middle !important;
-    margin: -5px 5px 0 0;
+    margin: -5px 5px 0 0 !important;
 }
 
-#capycorder > .prompt-name > .capycorder-label,
-#capycorder > .prompt-name > .capycorder-input-wrapper,
-#capycorder > .prompt-name > .capycorder-actions{
+#capycorder > form.prompt-name > .capycorder-label,
+#capycorder > form.prompt-name > .capycorder-input-wrapper,
+#capycorder > form.prompt-name > .capycorder-actions{
     display: table-cell !important;
     width: auto !important;
     position: relative !important;
 }
 
-#capycorder > .prompt-name > .capycorder-label,
-#capycorder > .prompt-name > .capycorder-actions {
+#capycorder > form.prompt-name > .capycorder-label,
+#capycorder > form.prompt-name > .capycorder-actions {
     width: 5px !important;
     padding: 5px !important;
     white-space: nowrap !important;
 }
 
-#capycorder > .prompt-name > .capycorder-label {
+#capycorder > form.prompt-name > .capycorder-label {
     font-weight: bold !important;
 }
 
-#capycorder > .prompt-name > .capycorder-input-wrapper input {
+#capycorder > form.prompt-name > .capycorder-input-wrapper input {
     width: 100%; !important;
     font-family: Monaco, Courier, mono-space !important;
     color: #727272 !important;
     font-size: 14px !important;
+    height: auto !important;
     background: none !important;
     border: none !important;
     outline: none !important;
     border-bottom: 1px dotted #727272 !important;
     border-radius: none !important;
     padding: 0 !important;
+    margin: 0 !important;
 }
 
-#capycorder > .prompt-name > .capycorder-input-wrapper input::-webkit-input-placeholder {
+#capycorder > form.prompt-name > .capycorder-input-wrapper input::-webkit-input-placeholder {
     color: #727272 !important;
 }
 
-#capycorder > .prompt-name > .capycorder-input-wrapper input:focus {
+#capycorder > form.prompt-name > .capycorder-input-wrapper input:focus {
     color: #e5bf1e !important;
 }
 
-#capycorder > .prompt-name > .capycorder-actions > a.cancel {
+#capycorder > form.prompt-name > .capycorder-actions > a.cancel {
     color: #e5bf1e !important;
     font-size: 11px !important;
     text-decoration: none !important;
@@ -70,7 +82,7 @@
     border-bottom: 1px solid #e5bf1e !important;
 }
 
-#capycorder > .prompt-name > .capycorder-actions > button {
+#capycorder > form.prompt-name > .capycorder-actions > button {
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #fade4f), color-stop(1, #e4be14)) !important;
     background-color: #fade4f !important;
     border-radius: 3px !important;
@@ -85,11 +97,11 @@
     line-height: 15px !important;
 }.
 
-#capycorder > .prompt-name > .capycorder-actions > button:hover {
+#capycorder > form.prompt-name > .capycorder-actions > button:hover {
     background: #fade4f !important;
 }
 
-#capycorder > .prompt-name > .capycorder-actions > button:active {
+#capycorder > form.prompt-name > .capycorder-actions > button:active {
     position: relative !important;
     top: 1px !important;
     background: #e4be14 !important;

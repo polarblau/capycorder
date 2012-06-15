@@ -50,14 +50,29 @@ describe 'RecoderUI', ->
 
   describe 'submitting name prompt', ->
 
+    callback = jasmine.createSpy()
+    $form = null
+
     beforeEach ->
-      ui.showNamePrompt()
+      ui.showNamePrompt(callback)
+      $form = $('body #capycorder .prompt-name form')
+
+    it 'should call the callback when submitted', ->
+      $form.trigger('submit')
+      expect(callback).toHaveBeenCalled()
+
+    it 'should call the callback and pass the value of the input', ->
+      $('#capycorder-spec-name').val('foo')
+      $form.trigger('submit')
+      expect(callback).toHaveBeenCalledWith('foo')
 
     it 'should submit the form when pressing ENTER', ->
+      $('#capycorder-spec-name').trigger(ENTER_EVENT)
+      expect(callback).toHaveBeenCalledWith('foo')
+
+    it 'should hide the prompt', ->
       expect($('body #capycorder .prompt-name')).toBeVisible()
-      spyOnEvent($('body #capycorder .prompt-name button'), 'click')
-      runs ->
-        $('#capycorder-spec-name').trigger(ENTER_EVENT)
+      runs -> $form.trigger('submit')
       waits(ui.delayToHide * 1000)
       runs ->
         expect($('body #capycorder .prompt-name')).not.toBeVisible()

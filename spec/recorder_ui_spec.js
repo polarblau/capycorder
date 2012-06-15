@@ -59,14 +59,30 @@
       });
     });
     return describe('submitting name prompt', function() {
+      var $form, callback;
+      callback = jasmine.createSpy();
+      $form = null;
       beforeEach(function() {
-        return ui.showNamePrompt();
+        ui.showNamePrompt(callback);
+        return $form = $('body #capycorder .prompt-name form');
       });
-      return it('should submit the form when pressing ENTER', function() {
+      it('should call the callback when submitted', function() {
+        $form.trigger('submit');
+        return expect(callback).toHaveBeenCalled();
+      });
+      it('should call the callback and pass the value of the input', function() {
+        $('#capycorder-spec-name').val('foo');
+        $form.trigger('submit');
+        return expect(callback).toHaveBeenCalledWith('foo');
+      });
+      it('should submit the form when pressing ENTER', function() {
+        $('#capycorder-spec-name').trigger(ENTER_EVENT);
+        return expect(callback).toHaveBeenCalledWith('foo');
+      });
+      return it('should hide the prompt', function() {
         expect($('body #capycorder .prompt-name')).toBeVisible();
-        spyOnEvent($('body #capycorder .prompt-name button'), 'click');
         runs(function() {
-          return $('#capycorder-spec-name').trigger(ENTER_EVENT);
+          return $form.trigger('submit');
         });
         waits(ui.delayToHide * 1000);
         return runs(function() {

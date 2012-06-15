@@ -8,7 +8,7 @@ class RecorderUI
   getTemplate: ->
     """
       <div id="capycorder">
-        <div class="prompt-name">
+        <form action="#" method="POST" class="prompt-name">
           <div class="capycorder-label">
             <img src="#{@chrome.extension.getURL('images/button_off.png')}" />
             Name your test. It
@@ -18,9 +18,9 @@ class RecorderUI
           </div>
           <div class="capycorder-actions">
             <a href="#" class="cancel">Cancel</a>
-            <button>OK</button>
+            <button type="submit">OK</button>
           </div>
-        </div>
+        </form>
         <div class="capture-actions">
           <div>
             <img src="#{@chrome.extension.getURL('images/button_capture_actions.png')}" />
@@ -50,7 +50,7 @@ class RecorderUI
   create: ->
     if !@_created && window.top == window.self
       @$ui = $(@getTemplate())
-      @$ui.appendTo('body').find('> div').hide()
+      @$ui.appendTo('body').find('> div, > form').hide()
       @_created = true
 
   showNamePrompt: (block = ->) ->
@@ -61,18 +61,14 @@ class RecorderUI
       $visible
         .find('input')
         .val('')
-        .keypress (event) ->
-          if event.which == 13
-            $(@).trigger('blur')
-            $visible.find('button').trigger('click')
         .end()
         .find('a')
         .one 'click', =>
           @_hideVisible()
           block(null)
         .end()
-        .find('button')
-        .one 'click', =>
+        .one 'submit', (e) =>
+          e.preventDefault()
           name = $visible.find('#capycorder-spec-name').val()
           @_hideVisible()
           block(name)
@@ -86,15 +82,15 @@ class RecorderUI
       @hideAfter = setTimeout @_hideVisible, @delayToHide * 1000
 
   _showUI: (block = ->) ->
-    @$ui.animate top: '0px', 250, => block()
+    @$ui.animate marginTop: '0px', 250, => block()
 
   _hideUI: (block = ->) ->
-    @$ui.animate top: '-200px', 250, => block()
+    @$ui.animate marginTop: '-200px', 250, => block()
 
   _hideVisible: (block = ->) =>
     clearTimeout @hideAfter if @hideAfter?
     @$ui.off 'mouseover.recorderui'
-    $visible = @$ui.find('div:visible')
+    $visible = @$ui.find('div:visible, form:visible')
     if $visible.length
       @_hideUI =>
         $visible.hide()

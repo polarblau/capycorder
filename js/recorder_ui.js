@@ -12,7 +12,7 @@
     RecorderUI.prototype.hideAfter = null;
 
     RecorderUI.prototype.getTemplate = function() {
-      return "<div id=\"capycorder\">\n  <div class=\"prompt-name\">\n    <div class=\"capycorder-label\">\n      <img src=\"" + (this.chrome.extension.getURL('images/button_off.png')) + "\" />\n      Name your test. It\n    </div>\n    <div class=\"capycorder-input-wrapper\">\n      <input type=\"text\" id=\"capycorder-spec-name\" placeholder=\"should do something\" />\n    </div>\n    <div class=\"capycorder-actions\">\n      <a href=\"#\" class=\"cancel\">Cancel</a>\n      <button>OK</button>\n    </div>\n  </div>\n  <div class=\"capture-actions\">\n    <div>\n      <img src=\"" + (this.chrome.extension.getURL('images/button_capture_actions.png')) + "\" />\n      Interact with the page to record actions.\n    </div>\n  </div>\n  <div class=\"capture-matchers\">\n    <div>\n      <img src=\"" + (this.chrome.extension.getURL('images/button_capture_matchers.png')) + "\" />\n      Select text ranges or elements to record matchers.\n    </div>\n </div>\n  <div class=\"generate\">\n    <div>\n      <img src=\"" + (this.chrome.extension.getURL('images/button_generate.png')) + "\" />\n      Thanks! The recorded spec has been copied to the clipboard.\n    </div>\n  </div>\n</div>";
+      return "<div id=\"capycorder\">\n  <form action=\"#\" method=\"POST\" class=\"prompt-name\">\n    <div class=\"capycorder-label\">\n      <img src=\"" + (this.chrome.extension.getURL('images/button_off.png')) + "\" />\n      Name your test. It\n    </div>\n    <div class=\"capycorder-input-wrapper\">\n      <input type=\"text\" id=\"capycorder-spec-name\" placeholder=\"should do something\" />\n    </div>\n    <div class=\"capycorder-actions\">\n      <a href=\"#\" class=\"cancel\">Cancel</a>\n      <button type=\"submit\">OK</button>\n    </div>\n  </form>\n  <div class=\"capture-actions\">\n    <div>\n      <img src=\"" + (this.chrome.extension.getURL('images/button_capture_actions.png')) + "\" />\n      Interact with the page to record actions.\n    </div>\n  </div>\n  <div class=\"capture-matchers\">\n    <div>\n      <img src=\"" + (this.chrome.extension.getURL('images/button_capture_matchers.png')) + "\" />\n      Select text ranges or elements to record matchers.\n    </div>\n </div>\n  <div class=\"generate\">\n    <div>\n      <img src=\"" + (this.chrome.extension.getURL('images/button_generate.png')) + "\" />\n      Thanks! The recorded spec has been copied to the clipboard.\n    </div>\n  </div>\n</div>";
     };
 
     function RecorderUI(options) {
@@ -26,7 +26,7 @@
     RecorderUI.prototype.create = function() {
       if (!this._created && window.top === window.self) {
         this.$ui = $(this.getTemplate());
-        this.$ui.appendTo('body').find('> div').hide();
+        this.$ui.appendTo('body').find('> div, > form').hide();
         return this._created = true;
       }
     };
@@ -42,16 +42,12 @@
         _this._showUI(function() {
           return _this.$ui.find('.prompt-name input').trigger('focus');
         });
-        return $visible.find('input').val('').keypress(function(event) {
-          if (event.which === 13) {
-            $(this).trigger('blur');
-            return $visible.find('button').trigger('click');
-          }
-        }).end().find('a').one('click', function() {
+        return $visible.find('input').val('').end().find('a').one('click', function() {
           _this._hideVisible();
           return block(null);
-        }).end().find('button').one('click', function() {
+        }).end().one('submit', function(e) {
           var name;
+          e.preventDefault();
           name = $visible.find('#capycorder-spec-name').val();
           _this._hideVisible();
           return block(name);
@@ -79,7 +75,7 @@
         block = function() {};
       }
       return this.$ui.animate({
-        top: '0px'
+        marginTop: '0px'
       }, 250, function() {
         return block();
       });
@@ -91,7 +87,7 @@
         block = function() {};
       }
       return this.$ui.animate({
-        top: '-200px'
+        marginTop: '-200px'
       }, 250, function() {
         return block();
       });
@@ -107,7 +103,7 @@
         clearTimeout(this.hideAfter);
       }
       this.$ui.off('mouseover.recorderui');
-      $visible = this.$ui.find('div:visible');
+      $visible = this.$ui.find('div:visible, form:visible');
       if ($visible.length) {
         return this._hideUI(function() {
           $visible.hide();
