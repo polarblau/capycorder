@@ -3,7 +3,7 @@ Based on jQuery-GetPath v0.01, by Dave Cardwell. (2007-04-27)
 Extended by Florian Plank, Polarblau (2012)
 ###
 $.fn.getSelector = (path = '') ->
-  console.log path
+
   unless @length
     return $.error('No element found for $.getSelector.')
 
