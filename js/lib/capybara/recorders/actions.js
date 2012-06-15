@@ -129,7 +129,9 @@
     };
 
     Actions.prototype.findScopeAndCapture = function(name, $el, locator, options) {
-      return this.capture(name, locator, this._formScope($el), options);
+      if (!($el.parents('#capycorder').length > 0)) {
+        return this.capture(name, locator, this._formScope($el), options);
+      }
     };
 
     Actions.prototype.capture = function(name, locator, scope, options) {

@@ -88,7 +88,8 @@ class Capybara.Recorders.Actions
   # HELPERS
 
   findScopeAndCapture: (name, $el, locator, options) ->
-    @capture name, locator, @_formScope($el), options
+    unless $el.parents('#capycorder').length > 0
+      @capture name, locator, @_formScope($el), options
 
   capture: (name, locator, scope, options = {}) ->
     action =

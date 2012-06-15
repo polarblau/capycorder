@@ -32,7 +32,7 @@
         return this.shouldHaveContent($el, selection);
       } else {
         selector = $el.getSelector();
-        return this.capture('shouldHaveSelector', selector);
+        return this.capture('shouldHaveSelector', selector, $el);
       }
     };
 
@@ -40,12 +40,12 @@
       var content, selector;
       content = window.getSelection().toString();
       selector = $el.getSelector();
-      return this.capture('shouldHaveContent', selector, null, {
+      return this.capture('shouldHaveContent', selector, $el, null, {
         content: content
       });
     };
 
-    Matchers.prototype.capture = function(name, selector, scope, options) {
+    Matchers.prototype.capture = function(name, selector, $el, scope, options) {
       var matcher;
       if (scope == null) {
         scope = null;
@@ -53,15 +53,17 @@
       if (options == null) {
         options = {};
       }
-      matcher = {
-        type: 'matcher',
-        name: name,
-        selector: selector,
-        scope: scope,
-        options: options
-      };
-      this.matchers.push(matcher);
-      return this.afterCaptureCallback(matcher);
+      if (!($el.parents('#capycorder').length > 0)) {
+        matcher = {
+          type: 'matcher',
+          name: name,
+          selector: selector,
+          scope: scope,
+          options: options
+        };
+        this.matchers.push(matcher);
+        return this.afterCaptureCallback(matcher);
+      }
     };
 
     Matchers.prototype._nsevent = function(event) {

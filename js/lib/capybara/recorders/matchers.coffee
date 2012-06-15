@@ -29,26 +29,27 @@ class Capybara.Recorders.Matchers
       @shouldHaveContent($el, selection)
     else
       selector = $el.getSelector()
-      @capture 'shouldHaveSelector', selector
+      @capture 'shouldHaveSelector', selector, $el
 
   shouldHaveContent: ($el) ->
     content = window.getSelection().toString()
     selector = $el.getSelector()
-    @capture 'shouldHaveContent', selector, null, content: content
+    @capture 'shouldHaveContent', selector, $el, null, content: content
 
 
   # HELPERS
 
-  capture: (name, selector, scope = null, options = {}) ->
-    matcher =
-      type    : 'matcher',
-      name    : name,
-      selector: selector,
-      scope   : scope
-      options : options
+  capture: (name, selector, $el, scope = null, options = {}) ->
+    unless $el.parents('#capycorder').length > 0
+      matcher =
+        type    : 'matcher',
+        name    : name,
+        selector: selector,
+        scope   : scope
+        options : options
 
-    @matchers.push matcher
-    @afterCaptureCallback matcher
+      @matchers.push matcher
+      @afterCaptureCallback matcher
 
   # ----------------------------------------------------------------------------
   # "PRIVATE"
