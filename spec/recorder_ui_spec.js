@@ -2,11 +2,8 @@
 (function() {
 
   describe('RecoderUI', function() {
-    var CHROME, ENTER_EVENT, ui;
+    var CHROME, ui;
     ui = null;
-    ENTER_EVENT = $.Event('keypress', {
-      'which': 13
-    });
     CHROME = {
       extension: {
         getURL: function(path) {
@@ -60,11 +57,12 @@
     });
     return describe('submitting name prompt', function() {
       var $form, callback;
-      callback = jasmine.createSpy();
+      callback = null;
       $form = null;
       beforeEach(function() {
+        callback = jasmine.createSpy();
         ui.showNamePrompt(callback);
-        return $form = $('body #capycorder .prompt-name form');
+        return $form = $('body #capycorder form.prompt-name');
       });
       it('should call the callback when submitted', function() {
         $form.trigger('submit');
@@ -73,10 +71,6 @@
       it('should call the callback and pass the value of the input', function() {
         $('#capycorder-spec-name').val('foo');
         $form.trigger('submit');
-        return expect(callback).toHaveBeenCalledWith('foo');
-      });
-      it('should submit the form when pressing ENTER', function() {
-        $('#capycorder-spec-name').trigger(ENTER_EVENT);
         return expect(callback).toHaveBeenCalledWith('foo');
       });
       return it('should hide the prompt', function() {

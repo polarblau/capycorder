@@ -1,7 +1,6 @@
 describe 'RecoderUI', ->
 
   ui = null
-  ENTER_EVENT = $.Event 'keypress', 'which': 13
   CHROME =
     extension:
       getURL: (path) -> "../#{path}"
@@ -50,12 +49,13 @@ describe 'RecoderUI', ->
 
   describe 'submitting name prompt', ->
 
-    callback = jasmine.createSpy()
+    callback = null
     $form = null
 
     beforeEach ->
+      callback = jasmine.createSpy()
       ui.showNamePrompt(callback)
-      $form = $('body #capycorder .prompt-name form')
+      $form = $('body #capycorder form.prompt-name')
 
     it 'should call the callback when submitted', ->
       $form.trigger('submit')
@@ -64,10 +64,6 @@ describe 'RecoderUI', ->
     it 'should call the callback and pass the value of the input', ->
       $('#capycorder-spec-name').val('foo')
       $form.trigger('submit')
-      expect(callback).toHaveBeenCalledWith('foo')
-
-    it 'should submit the form when pressing ENTER', ->
-      $('#capycorder-spec-name').trigger(ENTER_EVENT)
       expect(callback).toHaveBeenCalledWith('foo')
 
     it 'should hide the prompt', ->
