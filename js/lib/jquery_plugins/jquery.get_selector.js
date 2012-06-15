@@ -13,7 +13,6 @@ Extended by Florian Plank, Polarblau (2012)
     if (path == null) {
       path = '';
     }
-    console.log(path);
     if (!this.length) {
       return $.error('No element found for $.getSelector.');
     }
