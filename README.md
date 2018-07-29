@@ -82,4 +82,4 @@ Since the specs are loading fixtures via AJAX, you should run them off a
 server to avoid cross-origin issues. I prefer to use
 [serve](http://get-serve.com).
 
-The specs are written using [Jasmine](http://pivotal.github.com/jasmine/) -- you can find the [docs here](http://pivotal.github.com/jasmine/jsdoc/).
+The specs are written using [Jasmine](https://jasmine.github.io/) -- you can find the [docs here](https://jasmine.github.io/pages/docs_home.html).
